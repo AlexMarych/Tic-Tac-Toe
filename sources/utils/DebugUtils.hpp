@@ -15,7 +15,7 @@ namespace DebugUtils
     inline void draw_physics_objects_bounding_boxes(b2World *const world)
     {
 #ifdef DEBUG
-        auto currentBody = world->GetBodyList();
+        /*auto currentBody = world->GetBodyList();
         while (currentBody != nullptr)
         {
             auto pos = currentBody->GetPosition();
@@ -47,7 +47,7 @@ namespace DebugUtils
             }
 
             currentBody = currentBody->GetNext();
-        }
+        }*/
 
 #endif
     }
