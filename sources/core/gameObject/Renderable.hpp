@@ -5,7 +5,7 @@
 class Renderable {
 	private:
 		Texture2D texture;
-		Vector2 origin;
+		Vector2 origin = {.0f, .0f};
 		Rectangle sourceRect;
 		Rectangle destRect;
 		float rotation = 0.0f;
@@ -14,6 +14,10 @@ class Renderable {
 	public:
 		Renderable(const Texture2D& texture, const Rectangle& sourceRect, const Rectangle& destRect, const Vector2& origin)
 			: texture(texture), sourceRect(sourceRect), destRect(destRect), origin(origin) { }
+
+		Renderable(const Texture2D& texture, const Rectangle& destRect)
+			: texture(texture), sourceRect({ 0, 0, (float)texture.width, (float)texture.height }), destRect(destRect) {
+		}
 
 		virtual ~Renderable() = default;
 

@@ -3,7 +3,7 @@
 #include <vector>
 #include "raylib.h"
 #include "patterns/State/IState.hpp"
-#include <GameObject/GameObject.hpp>
+#include <core/gameObject/GameObject.hpp>
 #include <string>
 #include <memory>
 
