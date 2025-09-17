@@ -1,28 +1,29 @@
 #pragma once
 
 #include "scene/BaseScene.hpp"
+#include <vector>
 #include <memory>
+#include "patterns/State/StateMachine.hpp"
 
 
-class SceneManager {
+class SceneManager : StateMachine {
 	private:
-		BaseScene* currentScene;
 		float timeScale = 1.0f;
 
 	public:	
-		SceneManager(BaseScene* firstScene)
-			: currentScene(firstScene)
+		SceneManager(BaseScene* firstScene) { setState(static_cast<IState&>(*firstScene)); }
+
+		~SceneManager() 
 		{
-			if (currentScene) {
-				currentScene->enter();
-			}
+			if (auto current = getCurrentState())
+				current->exit();
 		}
 
-		~SceneManager();
-
-		void setScene(BaseScene* scene);
-		
-		void tick(float deltaTime) { if (currentScene) currentScene->tick(deltaTime * timeScale); }
+		void update(float deltaTime) 
+		{ 
+			if (auto current = getCurrentState()) 
+				current->tick(deltaTime * timeScale);
+		}
 
 		void setTimeScale(float scale) { timeScale = scale; }
 };

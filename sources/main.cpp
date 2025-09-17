@@ -30,6 +30,7 @@ int main() {
 		BeginDrawing();
 		ClearBackground(RAYWHITE);
 	
+		sceneManager->update(GetFrameTime());
 
 		EndDrawing();
 	}

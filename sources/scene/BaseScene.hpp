@@ -2,13 +2,13 @@
 
 #include <vector>
 #include "raylib.h"
-#include "patterns/State.hpp"
+#include "patterns/State/IState.hpp"
 #include <GameObject/GameObject.hpp>
 #include <string>
 #include <memory>
 
 
-class BaseScene : IState{
+class BaseScene : public IState{
 
 private:
 	std::string name;
