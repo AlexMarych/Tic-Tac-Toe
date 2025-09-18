@@ -1,4 +1,15 @@
-#include "patterns/State/IState.hpp"
+#pragma once
+
+class IState
+{
+public:
+	virtual ~IState() {};
+	virtual void enter() {};
+	virtual void tick(float deltaTime) {};
+	virtual void tick() {};
+	virtual void exit() {};
+
+};
 
 class StateMachine
 {
@@ -10,8 +21,8 @@ public:
 
 	virtual inline IState* getCurrentState() const { return currentState; }
 
-	virtual void update(float deltaTime) {};
-	virtual void update() {};
+	virtual void update(float deltaTime) { currentState->tick(deltaTime); }
+	virtual void update() { currentState->tick(); }
 
 	virtual void setState(IState& newState) 
 	{
