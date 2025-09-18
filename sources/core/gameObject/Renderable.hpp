@@ -12,6 +12,8 @@ class Renderable {
 		Color tint = WHITE;
 
 	public:
+		Renderable() {};
+
 		Renderable(const Texture2D& texture, const Rectangle& sourceRect, const Rectangle& destRect, const Vector2& origin)
 			: texture(texture), sourceRect(sourceRect), destRect(destRect), origin(origin) { }
 
@@ -21,11 +23,16 @@ class Renderable {
 
 		virtual ~Renderable() = default;
 
+		virtual void setOrigin(Vector2 pivot) { origin = pivot; }
 		virtual void setPosition(float x, float y) { destRect.x = x; destRect.y = y; }	
 		virtual void setRotation(float angle) { rotation = angle; }
 		virtual void setTint(Color color) { tint = color; }
 		
+		virtual float getRotation() const { return rotation; }
+		virtual Color getTint() const { return tint; }
 		virtual Rectangle getPosition() const { return destRect; }
+		virtual Vector2 getOrigin() const { return origin;  }
+		virtual Texture2D getTexture() const { return texture; }
 
 		virtual void render() { DrawTexturePro(texture,sourceRect,destRect,origin,rotation,tint); }
 };

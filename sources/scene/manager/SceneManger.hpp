@@ -3,7 +3,7 @@
 #include "scene/BaseScene.hpp"
 #include <vector>
 #include <memory>
-#include "patterns/State/StateMachine.hpp"
+#include "../../core/patterns/State/StateMachine.hpp"
 
 
 class SceneManager : StateMachine {

@@ -7,7 +7,7 @@ BaseScene::~BaseScene() {
 void BaseScene::tick(float deltaTime)  {
 	for (auto& obj : objects) {
 		obj->update(deltaTime);
-		obj->render();
+		//obj->render();
 	}
 }
 

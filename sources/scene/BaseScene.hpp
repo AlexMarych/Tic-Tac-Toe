@@ -2,7 +2,7 @@
 
 #include <vector>
 #include "raylib.h"
-#include "patterns/State/IState.hpp"
+#include "core/patterns/State/StateMachine.hpp"
 #include <core/gameObject/GameObject.hpp>
 #include <string>
 #include <memory>

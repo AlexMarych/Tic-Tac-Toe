@@ -2,11 +2,11 @@
 
 #include "Renderable.hpp"
 
-class GameObject : Renderable {
+class GameObject {
 
 public:
 	virtual ~GameObject() = 0;
-	virtual void update(float deltaTime);
-	virtual void render() override;
+	virtual void update(float deltaTime) {}
+	virtual void update() {}
 
 };
