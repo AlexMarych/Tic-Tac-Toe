@@ -19,7 +19,11 @@ void UIButton::update() {
         if (IsMouseButtonDown(MOUSE_LEFT_BUTTON)) state = ButtonState::HOLDED;
         else state = ButtonState::FOCUSED;
 
-        if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON)) state = ButtonState::PRESSED;
+        if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON))
+        {
+            handleEvent();
+            state = ButtonState::PRESSED;
+        }
     }
     
 }
@@ -27,5 +31,22 @@ void UIButton::update() {
 void UIButton::render() {
 	if (!UIComponent::isVisible()) return;
 	
-
+    switch (state)
+    {
+    case ButtonState::PRESSED:
+        Animatable::Play("pressed");
+        break;
+    case ButtonState::DISABLED:
+        Animatable::Play("disabled");
+        break;
+    case ButtonState::FOCUSED:
+        Animatable::Play("focused");
+        break;
+    case ButtonState::HOLDED:
+        Animatable::Play("pressed");
+        break;
+    default:
+		Animatable::Play("idle");
+        break;
+    }
 }
