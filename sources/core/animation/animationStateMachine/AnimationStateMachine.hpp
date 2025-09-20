@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../../patterns/State/StateMachine.hpp"
-#include "../../gameObject/Renderable.hpp"
+#include "../../coreObject/Renderable.hpp"
 #include "raylib.h"
 #include <string>
 #include <map>

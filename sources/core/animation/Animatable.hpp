@@ -13,9 +13,11 @@ private:
 	std::map<std::string, AnimationState> animations;
 
 public:
-	Animatable() 
+	Animatable(const Texture2D& animSheet, Rectangle destRect, int maxFrame) 
 	{ 
 		animator = new AnimationStateMachine();
+		auto anim = new AnimationState(animSheet, destRect, animSheet.width, animSheet.height, maxFrame);
+		addAnimation("idle", *anim);
 	}
 
 	void addAnimation(std::string name, const AnimationState& animation)
