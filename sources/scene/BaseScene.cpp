@@ -1,13 +1,17 @@
 #include "BaseScene.hpp"
 
 BaseScene::~BaseScene() {
-	objects.clear();
+	updateObjects.clear();
+	renderObjects.clear();
 }
 
 void BaseScene::tick(float deltaTime)  {
-	for (auto& obj : objects) {
+	for (auto obj : updateObjects) {
 		obj->update(deltaTime);
-		//obj->render();
+	}
+	
+	for (auto obj : renderObjects) {
+		obj->render();
 	}
 }
 
