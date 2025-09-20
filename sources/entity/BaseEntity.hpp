@@ -1,21 +1,16 @@
 #include "raylib.h"
-#include "GameObject.hpp"
+#include "../core/coreObject/GameObject.hpp"
+#include "../core/animation/Animatable.hpp"
 #include <map>
 
-enum AnimationState {
-	IDLE,
-	AIRBORN
-};
 
-class BaseEntity : GameObject{
-	public:
-		BaseEntity(const Texture2D& texture)
+class BaseEntity : public GameObject, public Animatable
+{	
+public:
+		BaseEntity() = default;
+		BaseEntity(const Texture2D& texture, const std::string& name, const Rectangle& destRect, int maxFrame)
+			: GameObject(texture, name, destRect), Animatable(texture, destRect, maxFrame){}
+
 		virtual ~BaseEntity() = default;
-		virtual void update(float deltaTime) = 0;
-
-	protected:
-		const Texture2D texture;
-		AnimationState currentState;
-		std::map<AnimationState, Texture2D> animations;
 		
 }
