@@ -1,8 +1,10 @@
 #pragma once
 
 #include "../UIComponentAnimated.hpp"
+#include "../UILabel.hpp"
 #include "raygui.h"
 #include <functional>
+#include <vector>
 
 enum class ButtonState {
 	NORMAL = 0,
@@ -12,15 +14,16 @@ enum class ButtonState {
 	DISABLED
 };
 
-class UIButton : public UIComponentAnimated
+class UIButton : public UIComponentAnimated, public UILabel
 {
 private:
+	std::vector <std::function<void()>> onClick;
+
 	ButtonState state = ButtonState::NORMAL;
-	std::function<void()> onClick;
 	
 public:
-	UIButton(const Texture2D& texture, const Rectangle& destRect) 
-		: UIComponentAnimated(texture, destRect) 
+	UIButton(const Texture2D& texture, const std::string text, const Rectangle& destRect) 
+		: UIComponentAnimated(texture, destRect), UILabel(text, destRect)
 	{ state = ButtonState::NORMAL; }
 
 	bool isPressed() const { return state == ButtonState::PRESSED; }
@@ -28,16 +31,17 @@ public:
 
 	void setState(ButtonState newState) { state = newState; }
 
-	void setOnClick(std::function<void()> handler) 
+	void addOnClick(std::function<void()> handler) 
 	{
-		onClick = handler;
+		onClick.push_back(handler);
 	}
 
-	void handleEvent() {
-		if (onClick) 
+	void handleEvent() 
+	{
+		for each(auto func in onClick)
 		{
-			onClick();
-		}
+			func();
+		}		
 	}
 
 

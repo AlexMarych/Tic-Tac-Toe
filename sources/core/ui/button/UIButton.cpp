@@ -49,4 +49,7 @@ void UIButton::render() {
 		Animatable::Play("idle");
         break;
     }
+
+	UILabel::render();
+
 }

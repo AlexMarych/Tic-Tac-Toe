@@ -21,6 +21,9 @@ class Renderable {
 			: texture(texture), sourceRect({ 0, 0, (float)texture.width, (float)texture.height }), destRect(destRect) {
 		}
 
+		Renderable(const Rectangle& sourceRect, const Rectangle& destRect, const Vector2& origin) 
+			: sourceRect(sourceRect), destRect(destRect), origin(origin) {}
+
 		virtual ~Renderable() = default;
 
 		virtual void setOrigin(Vector2 pivot) { origin = pivot; }
