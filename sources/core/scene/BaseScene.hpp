@@ -6,6 +6,8 @@
 #include <core/coreObject/GameObject.hpp>
 #include <string>
 #include <memory>
+#include <set>
+#include "Layer.hpp"
 
 
 class BaseScene : public IState{
@@ -14,26 +16,20 @@ private:
 	std::string name;
 
 protected:
-	std::vector<std::shared_ptr<Renderable>> renderObjects;
-	std::vector<std::shared_ptr<IUpdatable>> updateObjects;
-
+	std::set<Layer*> layers;
 public:
 	BaseScene() = default;
 	virtual ~BaseScene();
-	virtual void tick(float deltaTime) override;
-
-	virtual void enter() override;
-	virtual void exit() override;
-
-	template <typename T>
-	void addObject(const std::shared_ptr<T>& obj) {
-		if (auto u = std::dynamic_pointer_cast<IUpdatable>(obj)) {
-			updateObjects.push_back(u);
-		}
-		if (auto r = std::dynamic_pointer_cast<Renderable>(obj)) {
-			renderObjects.push_back(r);
+	virtual void tick(float deltaTime) override
+	{
+		for each(auto layer in layers)
+		{
+			layer->tick(deltaTime);
 		}
 	}
+	
+	virtual void enter() override;
+	virtual void exit() override;
 
 	void setName(const std::string& sceneName) { name = sceneName; }
 
