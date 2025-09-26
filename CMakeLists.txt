@@ -18,7 +18,12 @@ function(add_git_dependency libName gitURL gitTag)
         GIT_PROGRESS   TRUE
     )
     FetchContent_MakeAvailable(${libName})
-    target_compile_options(${libName} PRIVATE "-w")
+    get_target_property(target_type ${libName} TYPE)
+    if(target_type STREQUAL "INTERFACE_LIBRARY")
+        target_compile_options(${libName} INTERFACE "-w")
+    else()
+        target_compile_options(${libName} PRIVATE "-w")
+    endif()
 endfunction()
 
 # Add Raylib
@@ -67,6 +72,13 @@ add_git_dependency(
     11.1.2
 )
 
+# Add nlohmann_json 
+add_git_dependency(
+    nlohmann_json
+    https://github.com/nlohmann/json.git
+    v3.11.3
+)
+
 ##########################################################################################
 # Project executable setup
 ##########################################################################################
@@ -88,6 +100,7 @@ target_link_libraries(${PROJECT_NAME} PRIVATE raygui)
 target_link_libraries(${PROJECT_NAME} PRIVATE LDtkLoader::LDtkLoader)
 target_link_libraries(${PROJECT_NAME} PRIVATE box2d)
 target_link_libraries(${PROJECT_NAME} PRIVATE fmt)
+target_link_libraries(${PROJECT_NAME} PRIVATE nlohmann_json)
 
 ##########################################################################################
 # Project build settings
