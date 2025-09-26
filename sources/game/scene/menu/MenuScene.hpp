@@ -1,6 +1,6 @@
 #pragma once
 
-#include "scene/BaseScene.hpp"
+#include "../core/scene/BaseScene.hpp"
 #include <string>
 #include <map>
 #include "raygui.h"

@@ -3,7 +3,7 @@
 #include "animationStateMachine/AnimationStateMachine.hpp"
 #include <map>
 #include <string>
-#include "../../../utils/DebugUtils.hpp"
+#include "core/utils/DebugUtils.hpp"
 
 class Animatable {
 

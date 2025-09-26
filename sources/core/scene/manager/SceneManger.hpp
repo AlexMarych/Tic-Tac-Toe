@@ -1,9 +1,9 @@
 #pragma once
 
-#include "scene/BaseScene.hpp"
+#include "core/scene/BaseScene.hpp"
 #include <vector>
 #include <memory>
-#include "../../core/patterns/State/StateMachine.hpp"
+#include "core/patterns/State/StateMachine.hpp"
 
 
 class SceneManager : StateMachine {
@@ -11,7 +11,7 @@ class SceneManager : StateMachine {
 		float timeScale = 1.0f;
 
 	public:	
-		SceneManager(BaseScene* firstScene) { setState(static_cast<IState&>(*firstScene)); }
+		SceneManager() {}
 
 		~SceneManager() 
 		{
@@ -26,4 +26,13 @@ class SceneManager : StateMachine {
 		}
 
 		void setTimeScale(float scale) { timeScale = scale; }
+
+		template<typename TScene>
+		void setScene(TScene& newState) 
+		{
+			static_assert(std::is_base_of_v<BaseScene, TScene>,
+				"TScene must derive from BaseScene");
+
+			setState(newState);
+		}
 };

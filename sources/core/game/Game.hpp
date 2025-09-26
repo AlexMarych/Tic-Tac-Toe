@@ -1,7 +1,8 @@
 #pragma once
 
 #include <raylib.h>
-#include "scene/manager/SceneManger.hpp"
+#include <string>
+#include "core/scene/manager/SceneManger.hpp"
 
 namespace Core {
 
