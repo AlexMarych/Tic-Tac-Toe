@@ -4,52 +4,55 @@
 #include "raygui.h"
 #include "../UIComponent.hpp"
 
-bool UIComponent::guiSliderDragging = false;
+namespace UI {
 
-void UIButton::update() {
-    if ((state != ButtonState::DISABLED) || UIComponent::isSliderDragging()) return;
+    bool UIComponent::guiSliderDragging = false;
 
-    state = ButtonState::NORMAL;
-    
-    
-    Vector2 mousePoint = GetMousePosition();
+    void UIButton::update() {
+        if ((state != ButtonState::DISABLED) || UIComponent::isSliderDragging()) return;
 
-    if (UIComponent::isInBounds(mousePoint))
-    {
-        if (IsMouseButtonDown(MOUSE_LEFT_BUTTON)) state = ButtonState::HOLDED;
-        else state = ButtonState::FOCUSED;
+        state = ButtonState::NORMAL;
 
-        if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON))
+
+        Vector2 mousePoint = GetMousePosition();
+
+        if (UIComponent::isInBounds(mousePoint))
         {
-            handleEvent();
-            state = ButtonState::PRESSED;
+            if (IsMouseButtonDown(MOUSE_LEFT_BUTTON)) state = ButtonState::HOLDED;
+            else state = ButtonState::FOCUSED;
+
+            if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON))
+            {
+                handleEvent();
+                state = ButtonState::PRESSED;
+            }
         }
-    }
-    
-}
 
-void UIButton::render() {
-	if (!UIComponent::isVisible()) return;
-	
-    switch (state)
-    {
-    case ButtonState::PRESSED:
-        Animatable::Play("pressed");
-        break;
-    case ButtonState::DISABLED:
-        Animatable::Play("disabled");
-        break;
-    case ButtonState::FOCUSED:
-        Animatable::Play("focused");
-        break;
-    case ButtonState::HOLDED:
-        Animatable::Play("pressed");
-        break;
-    default:
-		Animatable::Play("idle");
-        break;
     }
 
-	UILabel::render();
+    void UIButton::render() {
+        if (!UIComponent::isVisible()) return;
 
+        switch (state)
+        {
+        case ButtonState::PRESSED:
+            Animatable::Play("pressed");
+            break;
+        case ButtonState::DISABLED:
+            Animatable::Play("disabled");
+            break;
+        case ButtonState::FOCUSED:
+            Animatable::Play("focused");
+            break;
+        case ButtonState::HOLDED:
+            Animatable::Play("pressed");
+            break;
+        default:
+            Animatable::Play("idle");
+            break;
+        }
+
+        UILabel::render();
+
+    }
 }

@@ -19,14 +19,14 @@ namespace Core {
 	private: 
 		bool isRunning;
 		GameConfig config;
-		SceneManager* sceneManager;
+		Scene::SceneManager* sceneManager;
 
 	public:
 		Game(const GameConfig& config) : config(config) {
 			SetConfigFlags(FLAG_WINDOW_RESIZABLE);
 			InitWindow(config.SCREEN_WIDTH, config.SCREEN_HEIGHT, config.WINDOW_TITLE.c_str());
 			SetTargetFPS(config.FPS);
-			sceneManager = new SceneManager();
+			sceneManager = new Scene::SceneManager();
 		}
 
 		~Game() {

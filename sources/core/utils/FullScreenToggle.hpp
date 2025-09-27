@@ -2,51 +2,56 @@
 
 #include "raylib.h"
 
-class FullScreenToggle
+namespace DebugUtils
 {
-private:
-	static int windowedWidth;
-	static int windowedHeight;
 
-public:
-
-	static void ToggleFullScreen()
+	class FullScreenToggle
 	{
-		if (!IsWindowFullscreen())
-		{
-			int monitor = GetCurrentMonitor();
-			SetWindowSize(
-				GetMonitorWidth(monitor),
-				GetMonitorHeight(monitor)
-			);
-			ToggleFullScreen();
-		}
-		else
-		{
-			ToggleFullScreen();
-			SetWindowSize(windowedWidth, windowedHeight);
-		}
-	}
+	private:
+		static int windowedWidth;
+		static int windowedHeight;
 
-	static int GetDisplayWidth()
-	{
-		if (IsWindowFullscreen())
+	public:
+
+		static void ToggleFullScreen()
 		{
-			int monitor = GetCurrentMonitor();
-			return GetMonitorWidth(monitor);
+			if (!IsWindowFullscreen())
+			{
+				int monitor = GetCurrentMonitor();
+				SetWindowSize(
+					GetMonitorWidth(monitor),
+					GetMonitorHeight(monitor)
+				);
+				ToggleFullScreen();
+			}
+			else
+			{
+				ToggleFullScreen();
+				SetWindowSize(windowedWidth, windowedHeight);
+			}
 		}
-		else return GetScreenWidth();
 
-	}
-
-	static int GetDisplayHeight()
-	{
-		if (IsWindowFullscreen()) 
+		static int GetDisplayWidth()
 		{
-			int monitor = GetCurrentMonitor();
-			return GetMonitorHeight(monitor);
-		}
-		else return GetScreenHeight();
-	}
+			if (IsWindowFullscreen())
+			{
+				int monitor = GetCurrentMonitor();
+				return GetMonitorWidth(monitor);
+			}
+			else return GetScreenWidth();
 
-};
+		}
+
+		static int GetDisplayHeight()
+		{
+			if (IsWindowFullscreen())
+			{
+				int monitor = GetCurrentMonitor();
+				return GetMonitorHeight(monitor);
+			}
+			else return GetScreenHeight();
+		}
+
+	};
+
+}

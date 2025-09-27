@@ -10,29 +10,33 @@
 #include "Layer.hpp"
 
 
-class BaseScene : public IState{
+namespace Scene {
 
-private:
-	std::string name;
+	class BaseScene : public IState {
 
-protected:
-	std::set<Layer*> layers;
-public:
-	BaseScene() = default;
-	virtual ~BaseScene();
-	virtual void tick(float deltaTime) override
-	{
-		for each(auto layer in layers)
+	private:
+		std::string name;
+
+	protected:
+		std::set<Layer*> layers;
+	public:
+		BaseScene() = default;
+		virtual ~BaseScene();
+		virtual void tick(float deltaTime) override
 		{
-			layer->tick(deltaTime);
+			for each(auto layer in layers)
+			{
+				layer->tick(deltaTime);
+			}
 		}
-	}
-	
-	virtual void enter() override;
-	virtual void exit() override;
 
-	void setName(const std::string& sceneName) { name = sceneName; }
+		virtual void enter() override;
+		virtual void exit() override;
 
-	std::string getName() const { return name; }
+		void setName(const std::string& sceneName) { name = sceneName; }
 
-};
+		std::string getName() const { return name; }
+
+	};
+
+}
