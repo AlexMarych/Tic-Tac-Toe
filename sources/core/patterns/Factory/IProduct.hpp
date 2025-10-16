@@ -10,7 +10,8 @@ namespace Factory {
 		const int classNameOffset = 6;
 		const nlohmann::json jsonTemplate = {
 				{"type", ""},
-				{"properties", ""}
+				{"properties", ""},
+				{"objects", ""}
 		};
 
 	public:

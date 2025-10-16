@@ -2,7 +2,7 @@
 
 #include "Event.hpp"
 
-namespace Event
+namespace EventSystem
 {
 	class IEventListener 
 	{

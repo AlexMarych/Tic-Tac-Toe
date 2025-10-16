@@ -8,16 +8,30 @@
 #include "core/patterns/Factory/IProduct.hpp"
 #include <map>
 #include <iostream>
+#include "core/event/IEventListener.hpp"
+#include "core/event/Event.hpp"
+#include "core/event/EventBus.hpp"
 
 using namespace Factory;
+using namespace EventSystem;
 
-class Test : public IProduct
+class Test : public IProduct, public IEventListener
 {
 private:
 		std::string text;
 
 public:
-	Test() {}
+	Test() : text("") {}
+
+	Test(std::string text) : text(text)
+	{
+		EventBus<Event>::Get().AddListener(this);
+	}
+
+	virtual void OnEvent(Event& event) override 
+	{
+		std::cout << "Event worked " + event.getName() << std::endl;
+	}
 
 	std::string getText() const { return text; }
 
