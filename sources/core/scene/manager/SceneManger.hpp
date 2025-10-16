@@ -1,40 +1,47 @@
 #pragma once
 
-#include "core/scene/BaseScene.hpp"
 #include <vector>
 #include <memory>
 #include "core/patterns/State/StateMachine.hpp"
+#include "core/scene/Layer.hpp"
+#include "core/coreObject/IRenderable.hpp"
+#include "core/coreObject/IUpdatable.hpp"
+
+using Layer = Scene::Layer;
 
 namespace Scene {
 
-	class SceneManager : StateMachine {
+	class SceneManager : public Core::IUpdatable, public Core::IRenderable{
 	private:
-		float timeScale = 1.0f;
+		std::vector<std::unique_ptr<Layer>> layerStack;
 
 	public:
 		SceneManager() {}
+		virtual ~SceneManager() {}
 
-		~SceneManager()
+		void update(float deltaTime) override
 		{
-			if (auto current = getCurrentState())
-				current->exit();
+			for (const auto& layer : layerStack) {
+				layer->update(deltaTime);
+				
+			}
 		}
 
-		void update(float deltaTime)
+		void render() override
 		{
-			if (auto current = getCurrentState())
-				current->tick(deltaTime * timeScale);
+			for (const auto& layer : layerStack)
+			{
+				layer->render();
+			}
 		}
 
-		void setTimeScale(float scale) { timeScale = scale; }
-
-		template<typename TScene>
-		void setScene(TScene& newState)
+		template<typename TLayer>
+		void PushLayer()
 		{
-			static_assert(std::is_base_of_v<BaseScene, TScene>,
-				"TScene must derive from BaseScene");
+			static_assert(std::is_base_of_v<Layer, TLayer>,
+				"TLayer must derive from Layer");
 
-			setState(newState);
+			layerStack.push_back(std::make_unique<TLayer>());
 		}
 	};
 

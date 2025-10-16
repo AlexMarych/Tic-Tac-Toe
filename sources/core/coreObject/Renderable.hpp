@@ -1,10 +1,11 @@
 #pragma once
 
 #include <raylib.h>
+#include "IRenderable.hpp"
 
 namespace Core {
 
-	class Renderable {
+	class Renderable : public IRenderable {
 	private:
 		Texture2D texture;
 		Vector2 origin = { .0f, .0f };
@@ -41,7 +42,7 @@ namespace Core {
 		virtual Vector2 getOrigin() const { return origin; }
 		virtual Texture2D getTexture() const { return texture; }
 
-		virtual void render() { DrawTexturePro(texture, sourceRect, destRect, origin, rotation, tint); }
+		virtual void render() override { DrawTexturePro(texture, sourceRect, destRect, origin, rotation, tint); }
 	};
 
 }

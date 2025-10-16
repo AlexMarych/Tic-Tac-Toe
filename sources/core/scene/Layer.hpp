@@ -2,29 +2,37 @@
 
 #include <vector>
 #include <memory>
+#include "core/coreObject/IUpdatable.hpp"
+#include "core/coreObject/IRenderable.hpp"
+#include "core/event/IEventListener.hpp"
 
-namespace Scene {
 
-	class Layer
+namespace Scene 
+{
+	class Layer : public Core::IUpdatable, public Core::IRenderable, public Event::IEventListener
 	{
 	private:
-		int depth;
-		std::vector<std::shared_ptr<Core::Renderable>> renderObjects;
+		
+		std::vector<std::shared_ptr<Core::IRenderable>> renderObjects;
 		std::vector<std::shared_ptr<Core::IUpdatable>> updateObjects;
 
-		bool operator<(const Layer& other) const {
-			return depth < other.depth;
-		}
+		
 	public:
-		Layer(int d) : depth(d) {}
-		~Layer() = default;
+		Layer() = default;
+		virtual ~Layer() = default;
 
-		void tick(float deltaTime) {
-			for (auto obj : updateObjects) {
+		virtual void OnEvent(Event::Event& event) override {}
+
+		virtual void update(float deltaTime) override
+		{
+			for (const auto& obj : updateObjects) {
 				obj->update(deltaTime);
 			}
+		}
 
-			for (auto obj : renderObjects) {
+		virtual void render() override
+		{
+			for (const auto& obj : renderObjects) {
 				obj->render();
 			}
 		}
