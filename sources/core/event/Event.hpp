@@ -4,15 +4,22 @@
 
 namespace EventSystem {
 
-	class Event
-	{
-	private:
-		std::string name;
-	public:
+    class Event {
+    private:
+        std::string name;
 		
-		Event(const std::string& name) : name(name) {}
-		virtual ~Event() = default;
-		std::string getName() const { return name; }
-	};
+    public:
+        explicit Event(const std::string& name) : name(name) {}
+        Event(const Event&) = default;
+        Event(Event&&) noexcept = default;
+
+        Event& operator=(const Event&) = default;
+        Event& operator=(Event&&) noexcept = default;
+
+        virtual ~Event() noexcept = default;
+
+        const std::string& getName() const noexcept { return name; }
+       
+    };
 
 }

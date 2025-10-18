@@ -18,6 +18,8 @@ namespace EventSystem
     public:
         EventBus(const EventBus&) = delete;
         EventBus& operator=(const EventBus&) = delete;
+        EventBus(EventBus&&) = delete;
+        EventBus& operator=(EventBus&&) = delete;
 
         static EventBus& Get()
         {
@@ -35,7 +37,7 @@ namespace EventSystem
             std::erase(m_Listeners, listener);
         }
 
-        void DispatchNow(T& e)
+        void Dispatch(T& e)
         {
             for (auto* listener : m_Listeners)
                 listener->OnEvent(e); 

@@ -7,7 +7,7 @@ namespace EventSystem
 	class IEventListener 
 	{
 	public:
-		virtual ~IEventListener() = default;
+		virtual ~IEventListener() noexcept = default;
 	 	virtual void OnEvent(Event& event) = 0;
 	};
 }
