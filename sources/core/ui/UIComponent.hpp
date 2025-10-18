@@ -7,20 +7,25 @@
 
 namespace UI {
 
-	class UIComponent : public GameObject, public Renderable
+	class UIComponent : public Core::GameObject,
 	{
 	private:
 
-		bool visible = true;
+		bool visible {true};
 		Rectangle bounds;
 
-		bool static guiSliderDragging;
+		static bool guiSliderDragging;
 	public:
-		UIComponent(const Texture2D& texture, const Rectangle& destRect)
-			: Renderable(texture, destRect), bounds(destRect) {
+		explicit UIComponent(const Texture2D& texture, const Rectangle& destRect) noexcept
+			: Core::GameObject(texture, std::string(), destRect)
+			, visible(true)
+		{
 		}
 
-		void setVisible(bool isVisible) { visible = isVisible; }
+		~UIComponent() noexcept override = default;
+
+		void setVisible(bool isVisible) noexcept { visible = isVisible; }
+		bool isVisible() const noexcept { return visible; }
 
 
 		virtual bool isInBounds(Vector2& point) { return CheckCollisionPointRec(point, bounds); }
@@ -28,8 +33,8 @@ namespace UI {
 		virtual void update() override { GameObject::update(); }
 		virtual void render() override { Renderable::render(); }
 
-		bool static isSliderDragging() { return guiSliderDragging; }
-		bool isVisible() const { return visible; }
+		bool static isSliderDragging() noexcept { return guiSliderDragging; }
+		bool isVisible() const noexcept { return visible; }
 	};
 
 }

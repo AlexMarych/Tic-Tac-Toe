@@ -5,6 +5,7 @@
 #include "raygui.h"
 #include <functional>
 #include <vector>
+#include "core/event/"
 
 namespace UI {
 
@@ -19,21 +20,23 @@ namespace UI {
 	class UIButton : public UIComponentAnimated, public UILabel
 	{
 	private:
-		std::vector <std::function<void()>> onClick;
+		std::vector <EventSytem::Event>> onClick;
 
 		ButtonState state = ButtonState::NORMAL;
 
 	public:
-		UIButton(const Texture2D& texture, const std::string text, const Rectangle& destRect)
-			: UIComponentAnimated(texture, destRect), UILabel(text, destRect)
+		explicit UIButton(const Texture2D& texture, const std::string& text, const Rectangle& destRect)
+			: UIComponentAnimated(texture, destRect)
+			, UILabel(text, destRect)
+			, state(ButtonState::NORMAL)
 		{
-			state = ButtonState::NORMAL;
 		}
+		~UIButton() override = default;
 
-		bool isPressed() const { return state == ButtonState::PRESSED; }
-		bool isHolded() const { return state == ButtonState::HOLDED; }
+		bool isPressed() const noexcept { return state == ButtonState::PRESSED; }
+		bool isHolded() const noexcept { return state == ButtonState::HOLDED; }
 
-		void setState(ButtonState newState) { state = newState; }
+		void setState(ButtonState newState) noexcept { state = newState; }
 
 		void addOnClick(std::function<void()> handler)
 		{
