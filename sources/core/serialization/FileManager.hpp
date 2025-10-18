@@ -1,10 +1,12 @@
 #pragma once
 
 #include <nlohmann/json.hpp>
-#include <iostream>
 #include <fstream>
 #include <string>
-#include <vector>
+#include <iostream>
+#include "core/utils/DebugUtils.hpp"
+
+using json = nlohmann::json;
 
 class FileManager {
 private:
@@ -12,16 +14,17 @@ private:
 
 public:
 
-	static nlohmann::json loadJson(std::string& relativePath, std::string& fileName)
+	static nlohmann::json loadJson(std::string& relativePath = "", std::string& fileName)
 	{
 		if (fileName.length() < 5 || fileName.substr(fileName.length() - 5) != ".json")
 			fileName += ".json";
 
-		std::ifstream fromfile(basePath + fileName);
+
+		std::ifstream fromfile(basePath + relativePath + fileName);
 
 		if (!fromfile.is_open()) {
-			std::cerr << "Error: Could not open file!" << std::endl;
-			return nlohmann::json(); // Возвращаем пустой json
+			DebugUtils::println(std::string("FileManager::loadJson: parse error: ") + e.what());
+			return std::nullopt;
 		}
 
 		nlohmann::json j;
@@ -30,7 +33,7 @@ public:
 		}
 		catch (const nlohmann::json::parse_error& e) {
 			std::cerr << "Parse error: " << e.what() << std::endl;
-			return nlohmann::json(); // Возвращаем пустой json
+			return nlohmann::json(); 
 		}
 		fromfile.close();
 
@@ -39,16 +42,25 @@ public:
 
 	static void saveJson(std::string& relativePath, std::string& fileName, const nlohmann::json& j)
 	{
+
 		if (fileName.length() < 5 || fileName.substr(fileName.length() - 5) != ".json")
 			fileName += ".json";
+		try 
+		{
+			std::ofstream outFile(basePath + relativePath + fileName);
+			if (!outFile.is_open()) {
+				DebugUtils::println(std::string("FileManager::saveJson: could not open file for write: ") + fullPath.string());
+				return;
+			}
 
-		std::ofstream outFile(basePath + fileName);
-		if (!outFile.is_open()) {
-			std::cerr << "Error: Could not open output file!" << std::endl;
+			outFile << j.dump(4) << std::endl;
+			outFile.close();
+
+		}
+		catch (const std::exception& e)
+		{
+			DebugUtils::println(std::string("FileManager::saveJson: exception: ") + e.what());
 			return;
 		}
-		
-		outFile << j.dump(4) << std::endl;
-		outFile.close();
 	}
 };
