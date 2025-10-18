@@ -2,16 +2,16 @@
 
 #include <raylib.h>
 #include <string>
-#include "core/scene/manager/SceneManger.hpp"
+#include "core/scene/manager/SceneManager.hpp"
 
 namespace Core {
 
-	struct GameConfig
+	struct GameConfig 
 	{
-		int SCREEN_WIDTH = 800;
-		int SCREEN_HEIGHT = 600;
-		int FPS = 60;
-		std::string WINDOW_TITLE = "Game";
+		int screenWidth = 800;
+		int screenHeight = 600;
+		int fps = 60;
+		std::string windowTitle = "Game";
 	};
 
 	class Game
@@ -19,22 +19,50 @@ namespace Core {
 	private: 
 		bool isRunning;
 		GameConfig config;
-		Scene::SceneManager* sceneManager;
+		std::unique_ptr<Scene::SceneManager> sceneManager;
+
+
+		void initWindow()
+		{
+			SetConfigFlags(FLAG_WINDOW_RESIZABLE);
+			InitWindow(config.screenWidth, config.screenHeight, config.windowTitle.c_str());
+			SetTargetFPS(config.fps);
+		}
+
+		void shutdown() noexcept
+		{
+			if (sceneManager) 
+			{
+				sceneManager.reset();
+			}
+			if (!isRunning) 
+			{
+				CloseWindow();
+			}
+		}
 
 	public:
-		Game(const GameConfig& config) : config(config) {
-			SetConfigFlags(FLAG_WINDOW_RESIZABLE);
-			InitWindow(config.SCREEN_WIDTH, config.SCREEN_HEIGHT, config.WINDOW_TITLE.c_str());
-			SetTargetFPS(config.FPS);
-			sceneManager = new Scene::SceneManager();
+		explicit Game(const GameConfig& cfg)
+			: config(cfg)
+			, sceneManager(std::make_unique<Scene::SceneManager>())
+			, isRunning(false)
+		{
+			initWindow();
 		}
 
-		~Game() {
-			CloseWindow();
+		~Game() noexcept
+		{
+			shutdown();
 		}
+
+		Game(const Game&) = delete;
+		Game& operator=(const Game&) = delete;
+		Game(Game&&) noexcept = default;
+		Game& operator=(Game&&) noexcept = default;
 
 		
-		void Stop() {
+		void stop() noexcept 
+		{
 			isRunning = false;
 		}
 
@@ -44,7 +72,7 @@ namespace Core {
 			while (isRunning) {
 
 				if (WindowShouldClose()) {
-					Stop();
+					stop();
 					break;
 				}
 
