@@ -4,31 +4,33 @@ class IState
 {
 public:
 	virtual ~IState() {};
-	virtual void enter() {};
-	virtual void tick(float deltaTime) {};
-	virtual void tick() {};
-	virtual void exit() {};
+	virtual void enter() noexcept {};
+	virtual void update(float deltaTime) noexcept {};
+	virtual void exit() noexcept {};
 
 };
 
 class StateMachine
 {
 private:
-	IState* currentState = nullptr;
+	IState* m_currentState = nullptr;
 public:
-	StateMachine() = default;
-	virtual ~StateMachine() = default;
+	StateMachine() noexcept = default;
+	virtual ~StateMachine() noexcept = default;
 
-	virtual inline IState* getCurrentState() const { return currentState; }
+	StateMachine(const StateMachine&) = delete;
+	StateMachine& operator=(const StateMachine&) = delete;
 
-	virtual void update(float deltaTime) { currentState->tick(deltaTime); }
-	virtual void update() { currentState->tick(); }
+	virtual inline IState* getCurrentState() const noexcept { return m_currentState; }
 
-	virtual void setState(IState& newState) 
+	virtual void update(float deltaTime) noexcept { m_currentState->update(deltaTime); }
+
+	virtual void setState(IState& newState) noexcept
 	{
-		if (currentState)
-			currentState->exit();
-		currentState = &newState;
-		currentState->enter();
+		if (m_currentState == &newState) return;
+
+		if (m_currentState) m_currentState->exit();
+		m_currentState = &newState;
+		if (m_currentState) m_currentState->enter();
 	}
 };
