@@ -5,44 +5,63 @@
 
 namespace Core {
 
-	class Renderable : public IRenderable {
-	private:
-		Texture2D texture;
-		Vector2 origin = { .0f, .0f };
-		Rectangle sourceRect;
-		Rectangle destRect;
-		float rotation = 0.0f;
-		Color tint = WHITE;
+    class Renderable : public IRenderable {
+    private:
+        Texture2D texture{};
+        Vector2 origin{ 0.0f, 0.0f };
+        Rectangle sourceRect{ 0.0f, 0.0f, 0.0f, 0.0f };
+        Rectangle destRect{ 0.0f, 0.0f, 0.0f, 0.0f };
+        float rotation{ 0.0f };
+        Color tint{ WHITE };
 
-	public:
-		Renderable() {};
+    public:
+        Renderable() noexcept = default;
 
-		Renderable(const Texture2D& texture, const Rectangle& sourceRect, const Rectangle& destRect, const Vector2& origin)
-			: texture(texture), sourceRect(sourceRect), destRect(destRect), origin(origin) {
-		}
+        Renderable(const Texture2D& texture,
+            const Rectangle& sourceRect,
+            const Rectangle& destRect,
+            const Vector2& origin = { 0.0f, 0.0f }) noexcept
+            : texture(texture)
+            , origin(origin)
+            , sourceRect(sourceRect)
+            , destRect(destRect)
+        {
+        }
 
-		Renderable(const Texture2D& texture, const Rectangle& destRect)
-			: texture(texture), sourceRect({ 0, 0, (float)texture.width, (float)texture.height }), destRect(destRect) {
-		}
+        explicit Renderable(const Texture2D& texture, const Rectangle& destRect) noexcept
+            : texture(texture)
+            , origin{ 0.0f, 0.0f }
+            , sourceRect{ 0.0f, 0.0f, static_cast<float>(texture.width), static_cast<float>(texture.height) }
+            , destRect(destRect)
+        {
+        }
 
-		Renderable(const Rectangle& destRect)
-			: sourceRect(sourceRect), destRect(destRect) {
-		}
+        explicit Renderable(const Rectangle& destRect) noexcept
+            : texture{}
+            , origin{ 0.0f, 0.0f }
+            , sourceRect{ 0.0f, 0.0f, 0.0f, 0.0f }
+            , destRect(destRect)
+        {
+        }
 
-		virtual ~Renderable() = default;
+        ~Renderable() noexcept override = default;
 
-		virtual void setOrigin(Vector2 pivot) { origin = pivot; }
-		virtual void setPosition(float x, float y) { destRect.x = x; destRect.y = y; }
-		virtual void setRotation(float angle) { rotation = angle; }
-		virtual void setTint(Color color) { tint = color; }
+        void setOrigin(const Vector2& pivot) noexcept { origin = pivot; }
+        void setPosition(float x, float y) noexcept { destRect.x = x; destRect.y = y; }
+        void setPosition(const Rectangle& rect) noexcept { destRect = rect; }
+        void setRotation(float angle) noexcept { rotation = angle; }
+        void setTint(Color color) noexcept { tint = color; }
+        void setSourceRect(const Rectangle& src) noexcept { sourceRect = src; }
+        void setTexture(const Texture2D& tex) noexcept { texture = tex; }
 
-		virtual float getRotation() const { return rotation; }
-		virtual Color getTint() const { return tint; }
-		virtual Rectangle getPosition() const { return destRect; }
-		virtual Vector2 getOrigin() const { return origin; }
-		virtual Texture2D getTexture() const { return texture; }
+        float getRotation() const noexcept { return rotation; }
+        Color getTint() const noexcept { return tint; }
+        Rectangle getPosition() const noexcept { return destRect; }
+        Vector2 getOrigin() const noexcept { return origin; }
+        const Texture2D& getTexture() const noexcept { return texture; }
+        Rectangle getSourceRect() const noexcept { return sourceRect; }
 
-		virtual void render() override { DrawTexturePro(texture, sourceRect, destRect, origin, rotation, tint); }
-	};
 
+        void render() override { DrawTexturePro(texture, sourceRect, destRect, origin, rotation, tint); }
+    };
 }
