@@ -49,22 +49,6 @@ if(NOT raygui_POPULATED)
     target_compile_options(raygui INTERFACE "-w")
 endif()
 
-# Add LDtkLoader
-add_git_dependency(
-    LDtkLoader
-    https://github.com/Madour/LDtkLoader.git
-    1.5.3.1
-)
-
-# Add Box2d
-set(BOX2D_BUILD_UNIT_TESTS OFF CACHE BOOL "" FORCE)
-set(BOX2D_BUILD_TESTBED OFF CACHE BOOL "" FORCE)
-add_git_dependency(
-    box2d
-    https://github.com/erincatto/box2d.git
-    v2.4.1
-)
-
 # Add {fmt} library
 add_git_dependency(
     fmt
@@ -97,8 +81,6 @@ target_include_directories(${PROJECT_NAME} PRIVATE ${PROJECT_INCLUDE})
 
 target_link_libraries(${PROJECT_NAME} PRIVATE raylib)
 target_link_libraries(${PROJECT_NAME} PRIVATE raygui)
-target_link_libraries(${PROJECT_NAME} PRIVATE LDtkLoader::LDtkLoader)
-target_link_libraries(${PROJECT_NAME} PRIVATE box2d)
 target_link_libraries(${PROJECT_NAME} PRIVATE fmt)
 target_link_libraries(${PROJECT_NAME} PRIVATE nlohmann_json)
 
