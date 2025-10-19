@@ -5,7 +5,8 @@
 #include "raygui.h"
 #include <functional>
 #include <vector>
-#include "core/event/"
+#include "core/event/InputEvent.hpp"
+#include "core/event/EventBus.hpp"
 
 namespace UI {
 
@@ -20,7 +21,7 @@ namespace UI {
 	class UIButton : public UIComponentAnimated, public UILabel
 	{
 	private:
-		std::vector <EventSytem::Event>> onClick;
+		std::vector <EventSystem::UIEvent> onClick;
 
 		ButtonState state = ButtonState::NORMAL;
 
@@ -38,16 +39,16 @@ namespace UI {
 
 		void setState(ButtonState newState) noexcept { state = newState; }
 
-		void addOnClick(std::function<void()> handler)
+		void addOnClick(const EventSystem::UIEvent& event)
 		{
-			onClick.push_back(handler);
+			onClick.push_back(event);
 		}
 
 		void handleEvent()
 		{
-			for each(auto func in onClick)
+			for (auto event : onClick)
 			{
-				func();
+				EventSystem::EventBus<EventSystem::UIEvent>::Get().Dispatch(event);
 			}
 		}
 
