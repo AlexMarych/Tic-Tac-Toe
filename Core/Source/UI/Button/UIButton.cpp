@@ -1,7 +1,7 @@
-#include "UIButton.hpp"
+#include "UIButton.h"
 #include "raylib.h"
 #include "raygui.h"
-#include "UI/UIComponent.hpp"
+#include "UI/UIComponent.h"
 
 namespace UI {
 

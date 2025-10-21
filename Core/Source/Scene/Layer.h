@@ -2,10 +2,10 @@
 
 #include <vector>
 #include <memory>
-#include "CoreObject/IUpdatable.hpp"
-#include "CoreObject/IRenderable.hpp"
-#include "Event/IEventListener.hpp"
-#include "Patterns/Factory/IProduct.hpp"
+#include "CoreObject/IUpdatable.h"
+#include "CoreObject/IRenderable.h"
+#include "Event/IEventListener.h"
+#include "Patterns/Factory/IProduct.h"
 
 
 namespace Scene 

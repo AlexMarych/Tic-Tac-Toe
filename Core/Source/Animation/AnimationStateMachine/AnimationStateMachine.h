@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Patterns/State/StateMachine.hpp"
-#include "CoreObject/Renderable.hpp"
+#include "Patterns/State/StateMachine.h"
+#include "CoreObject/Renderable.h"
 #include "raylib.h"
 #include <string>
 

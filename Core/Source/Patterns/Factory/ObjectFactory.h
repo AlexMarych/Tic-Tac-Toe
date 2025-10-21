@@ -1,7 +1,7 @@
 #pragma once
 
-#include <nlohmann/json.hpp>
-#include "IProduct.hpp"
+#include <nlohmann/json.h>
+#include "IProduct.h"
 #include <unordered_map>
 #include <typeindex>
 #include <functional>

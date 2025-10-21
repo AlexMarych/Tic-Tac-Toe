@@ -5,7 +5,7 @@
 #include <algorithm>
 #include <map>
 #include <typeinfo>
-#include "IEventListener.hpp"
+#include "IEventListener.h"
 
 namespace EventSystem
 {

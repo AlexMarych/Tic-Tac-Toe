@@ -2,7 +2,7 @@
 
 #include <stack>
 #include <memory>
-#include "ICommand.hpp"
+#include "ICommand.h"
 
 namespace Command
 {

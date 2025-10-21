@@ -2,7 +2,7 @@
 
 #include <raylib.h>
 #include <string>
-#include "Scene/manager/SceneManager.hpp"
+#include "Scene/manager/SceneManager.h"
 
 namespace Core {
 

@@ -1,7 +1,7 @@
 #pragma once
 
-#include "IUpdatable.hpp"
-#include "Renderable.hpp"
+#include "IUpdatable.h"
+#include "Renderable.h"
 #include <string>
 
 namespace Core {

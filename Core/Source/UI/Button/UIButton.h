@@ -1,12 +1,12 @@
 #pragma once
 
-#include "../UIComponentAnimated.hpp"
-#include "../UILabel.hpp"
+#include "../UIComponentAnimated.h"
+#include "../UILabel.h"
 #include "raygui.h"
 #include <functional>
 #include <vector>
-#include "Event/InputEvent.hpp"
-#include "Event/EventBus.hpp"
+#include "Event/InputEvent.h"
+#include "Event/EventBus.h"
 
 namespace UI {
 

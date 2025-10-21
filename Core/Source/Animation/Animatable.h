@@ -1,11 +1,11 @@
 #pragma once
 
-#include "animationStateMachine/AnimationStateMachine.hpp"
+#include "animationStateMachine/AnimationStateMachine.h"
 #include <memory>
 #include <string>
 #include <stdexcept>
 #include <unordered_map>
-#include "Utils/DebugUtils.hpp"
+#include "Utils/DebugUtils.h"
 
 namespace Animation {
 

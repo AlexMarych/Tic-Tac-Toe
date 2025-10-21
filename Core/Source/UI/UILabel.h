@@ -1,7 +1,7 @@
 #pragma once
 
 #include "raylib.h"
-#include "CoreObject/Renderable.hpp"
+#include "CoreObject/Renderable.h"
 #include <string>
 
 namespace UI {

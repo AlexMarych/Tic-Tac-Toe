@@ -1,7 +1,7 @@
 #pragma once
 
 #include <raylib.h>
-#include "IRenderable.hpp"
+#include "IRenderable.h"
 
 namespace Core {
 

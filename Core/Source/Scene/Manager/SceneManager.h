@@ -3,10 +3,10 @@
 #include <vector>
 #include <memory>
 #include <type_traits>
-#include "Patterns/State/StateMachine.hpp"
-#include "Scene/Layer.hpp"
-#include "CoreObject/IRenderable.hpp"
-#include "CoreObject/IUpdatable.hpp"
+#include "Patterns/State/StateMachine.h"
+#include "Scene/Layer.h"
+#include "CoreObject/IRenderable.h"
+#include "CoreObject/IUpdatable.h"
 
 using Layer = Scene::Layer;
 

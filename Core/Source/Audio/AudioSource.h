@@ -2,7 +2,7 @@
 
 #include "raylib.h"
 #include <string>
-#include "Utils/DebugUtils.hpp"
+#include "Utils/DebugUtils.h"
 
 namespace Audio
 {

@@ -1,7 +1,7 @@
 #pragma once
 
-#include "UIComponent.hpp"
-#include "Animation/Animatable.hpp"
+#include "UIComponent.h"
+#include "Animation/Animatable.h"
 #include <memory>
 #include <string>
 

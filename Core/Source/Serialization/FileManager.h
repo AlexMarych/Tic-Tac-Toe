@@ -1,10 +1,10 @@
 #pragma once
 
-#include <nlohmann/json.hpp>
+#include <nlohmann/json.h>
 #include <fstream>
 #include <string>
 #include <iostream>
-#include "Utils/DebugUtils.hpp"
+#include "Utils/DebugUtils.h"
 
 using json = nlohmann::json;
 

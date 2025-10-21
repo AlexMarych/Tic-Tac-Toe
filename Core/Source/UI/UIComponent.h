@@ -2,7 +2,7 @@
 
 #include "raygui.h"
 #include "raylib.h"
-#include "CoreObject/GameObject.hpp"
+#include "CoreObject/GameObject.h"
 #include <string>
 
 namespace UI {
