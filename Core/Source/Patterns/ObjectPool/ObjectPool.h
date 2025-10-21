@@ -9,11 +9,6 @@ namespace Pool
 {
 	template <typename T>
 	class ObjectPool {
-	private:
-		std::stack<std::unique_ptr<T>()> m_pool;
-
-		int m_maxSize;
-		int m_defoultSize;
 
 	public:
 		ObjectPool(int defoultSize, int maxSize)
@@ -58,5 +53,11 @@ namespace Pool
 		virtual void onRelease(T* obj) {}
 		virtual void onGet(T* obj) {}
 		virtual void onDestroy(T* obj) {}
+
+	private:
+		std::stack<std::unique_ptr<T>()> m_pool{};
+
+		int m_maxSize{};
+		int m_defoultSize{};
 	};
 }

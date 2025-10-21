@@ -12,8 +12,7 @@ public:
 
 class StateMachine
 {
-private:
-	IState* m_currentState = nullptr;
+
 public:
 	StateMachine() noexcept = default;
 	virtual ~StateMachine() noexcept = default;
@@ -33,4 +32,7 @@ public:
 		m_currentState = &newState;
 		if (m_currentState) m_currentState->enter();
 	}
+
+private:
+	IState* m_currentState{};
 };

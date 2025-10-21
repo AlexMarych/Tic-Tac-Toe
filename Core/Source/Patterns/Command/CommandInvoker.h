@@ -8,13 +8,6 @@ namespace Command
 {
     class CommandInvoker
     {
-
-    private:
-        std::stack<std::unique_ptr<ICommand>> _undoStack;
-        std::stack<std::unique_ptr<ICommand>> _redoStack;
-
-        size_t maxHistory_{ 256 };
-
     public:
 		CommandInvoker() noexcept = default;
 		~CommandInvoker() noexcept = default;
@@ -28,34 +21,39 @@ namespace Command
         {
             if (!command) return;
             
-            if (command->Execute()) {
-                _undoStack.push(std::move(command));
-                redoStack_.clear();
-                if (undoStack_.size() > maxHistory) 
+            if (command->execute()) {
+                if (m_undoStack.size() <= m_maxHistory) 
                 {
-                    undoStack_.erase(undoStack_.begin());
+                    m_undoStack.push(std::move(command));
+                    m_redoStack = {};
                 }
             }
         }
 
         void undoCommand() {
-            if (_undoStack.empty()) return;
+            if (m_undoStack.empty()) return;
 
-            auto& command = _undoStack.top();
-            command->Undo();
-            _redoStack.push(std::move(_undoStack.top()));
-            _undoStack.pop();
+            auto& command = m_undoStack.top();
+            command->undo();
+            m_redoStack.push(std::move(m_undoStack.top()));
+            m_undoStack.pop();
         }
 
         void redoCommand() {
-            if (_redoStack.empty()) return;
-            auto& command = _redoStack.top();
-            command->Execute();
-            _undoStack.push(std::move(_redoStack.top()));
-            _redoStack.pop();
+            if (m_redoStack.empty()) return;
+            auto& command = m_redoStack.top();
+            command->execute();
+            m_undoStack.push(std::move(m_redoStack.top()));
+            m_redoStack.pop();
         }
 
-        void setMaxHistory(size_t maxHistory) noexcept { maxHistory_ = (maxHistory == 0u) ? 1u : maxHistory; }
-        size_t getMaxHistory() const noexcept { return maxHistory_; }
+        void setMaxHistory(const size_t& maxHistory) noexcept { m_maxHistory = (maxHistory == 0u) ? 1u : maxHistory; }
+        size_t getMaxHistory() const noexcept { return m_maxHistory; }
+
+    private:
+        std::stack<std::unique_ptr<ICommand>> m_undoStack{};
+        std::stack<std::unique_ptr<ICommand>> m_redoStack{};
+
+        size_t m_maxHistory{ 256 };
     };
 }

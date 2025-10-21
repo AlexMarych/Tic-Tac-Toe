@@ -21,32 +21,32 @@ namespace UI {
 	class UIButton : public UIComponentAnimated, public UILabel
 	{
 	private:
-		std::vector <EventSystem::UIEvent> onClick;
+		std::vector <EventSystem::UIEvent> m_onClick;
 
-		ButtonState state = ButtonState::NORMAL;
+		ButtonState m_state = ButtonState::NORMAL;
 
 	public:
 		explicit UIButton(const Texture2D& texture, const std::string& text, const Rectangle& destRect)
 			: UIComponentAnimated(texture, destRect)
 			, UILabel(text, destRect)
-			, state(ButtonState::NORMAL)
+			, m_state(ButtonState::NORMAL)
 		{
 		}
 		~UIButton() override = default;
 
-		bool isPressed() const noexcept { return state == ButtonState::PRESSED; }
-		bool isHolded() const noexcept { return state == ButtonState::HOLDED; }
+		bool isPressed() const noexcept { return m_state == ButtonState::PRESSED; }
+		bool isHolded() const noexcept { return m_state == ButtonState::HOLDED; }
 
-		void setState(ButtonState newState) noexcept { state = newState; }
+		void setState(ButtonState newState) noexcept { m_state = newState; }
 
 		void addOnClick(const EventSystem::UIEvent& event)
 		{
-			onClick.push_back(event);
+			m_onClick.push_back(event);
 		}
 
 		void handleEvent()
 		{
-			for (auto event : onClick)
+			for (auto event : m_onClick)
 			{
 				EventSystem::EventBus<EventSystem::UIEvent>::Get().Dispatch(event);
 			}

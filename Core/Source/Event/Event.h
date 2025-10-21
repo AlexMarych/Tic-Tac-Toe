@@ -5,11 +5,9 @@
 namespace EventSystem {
 
     class Event {
-    private:
-        std::string name;
-        bool handled = false;
+    
     public:
-        explicit Event(const std::string& name) : name(name) {}
+        explicit Event(const std::string& name) : m_name(name) {}
         Event(const Event&) = default;
         Event(Event&&) noexcept = default;
 
@@ -18,9 +16,13 @@ namespace EventSystem {
 
         virtual ~Event() noexcept = default;
 
-        const std::string& getName() const noexcept { return name; }
-		bool isHandled() const noexcept { return handled; }
+        const std::string& getName() const noexcept { return m_name; }
+		bool isHandled() const noexcept { return m_handled; }
 
+    private:
+        std::string m_name{};
+        bool m_handled{ false };
     };
+
 
 }

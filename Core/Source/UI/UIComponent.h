@@ -9,32 +9,32 @@ namespace UI {
 
 	class UIComponent : public Core::GameObject
 	{
-	private:
-
-		bool visible {true};
-		Rectangle bounds;
-
-		static bool guiSliderDragging;
+	
 	public:
 		explicit UIComponent(const Texture2D& texture, const Rectangle& destRect) noexcept
 			: Core::GameObject(texture, std::string(), destRect)
-			, visible(true)
+			, m_visible(true)
 		{
 		}
 
 		~UIComponent() noexcept override = default;
 
-		void setVisible(bool isVisible) noexcept { visible = isVisible; }
-		bool isVisible() const noexcept { return visible; }
+		void setVisible(bool isVisible) noexcept { m_visible = isVisible; }
+		bool isVisible() const noexcept { return m_visible; }
 
 
-		virtual bool isInBounds(Vector2& point) { return CheckCollisionPointRec(point, bounds); }
+		virtual bool isInBounds(Vector2& point) { return CheckCollisionPointRec(point, m_bounds); }
 
 		virtual void update(float deltaTime) override { GameObject::update(deltaTime); }
 		virtual void render() override { Renderable::render(); }
 
-		bool static isSliderDragging() noexcept { return guiSliderDragging; }
+		bool static isSliderDragging() noexcept { return s_guiSliderDragging; }
 
+	private:
+		bool m_visible{ true };
+		Rectangle m_bounds{};
+
+		static bool s_guiSliderDragging;
 	};
 
 }

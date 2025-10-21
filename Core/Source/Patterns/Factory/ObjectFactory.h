@@ -1,6 +1,6 @@
 #pragma once
 
-#include <nlohmann/json.h>
+#include <nlohmann/json.hpp>
 #include "IProduct.h"
 #include <unordered_map>
 #include <typeindex>
@@ -11,9 +11,7 @@ using json = nlohmann::json;
 namespace Factory
 {
     class ObjectFactory {
-        using Creator = std::function<std::unique_ptr<IProduct>()>;
-        std::unordered_map<std::type_index, Creator> registry;
-
+      
     public:
         static ObjectFactory& instance() {
             static ObjectFactory f;
@@ -23,7 +21,7 @@ namespace Factory
         template<typename T>
         void registerType() {
             static_assert(std::is_base_of<IProduct, T>::value, "T must derive from IProduct");
-            registry[typeid(T)] = []() -> std::unique_ptr<IProduct> 
+            m_registry[typeid(T)] = []() -> std::unique_ptr<IProduct> 
                 {
                     return std::make_unique<T>();
                 };
@@ -31,8 +29,8 @@ namespace Factory
 
         template<typename T>
         std::unique_ptr<T> create(const json& data) {
-            auto it = registry.find(typeid(T));
-            if (it == registry.end())
+            auto it = m_registry.find(typeid(T));
+            if (it == m_registry.end())
                 throw std::runtime_error("Type not registered");
 
             auto obj = it->second();
@@ -40,5 +38,8 @@ namespace Factory
 
             return std::unique_ptr<T>(static_cast<T*>(obj.release()));
         }
+	private:
+        using Creator = std::function<std::unique_ptr<IProduct>()>;
+        std::unordered_map<std::type_index, Creator> m_registry{};
     };
 }

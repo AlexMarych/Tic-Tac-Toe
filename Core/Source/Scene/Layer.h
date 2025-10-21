@@ -12,10 +12,6 @@ namespace Scene
 {
 	class Layer : public Core::IUpdatable, public Core::IRenderable, public EventSystem::IEventListener, public Factory::IProduct
 	{
-	private:
-		
-		std::vector<Core::IRenderable*> renderObjects;
-		std::vector<Core::IUpdatable*> updateObjects;
 		
 	public:
 		Layer() = default;
@@ -72,7 +68,6 @@ namespace Scene
 			renderObjects.erase(std::remove(renderObjects.begin(), renderObjects.end(), obj), renderObjects.end());
 			updateObjects.erase(std::remove(updateObjects.begin(), updateObjects.end(), obj), updateObjects.end());
 		}
-
 		
 		void clear() noexcept
 		{
@@ -80,6 +75,9 @@ namespace Scene
 			renderObjects.clear();
 		}
 
+	private:
+		std::vector<Core::IRenderable*> renderObjects;
+		std::vector<Core::IUpdatable*> updateObjects;
 	};
 
 }

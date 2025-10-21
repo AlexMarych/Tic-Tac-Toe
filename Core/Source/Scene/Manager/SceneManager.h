@@ -13,8 +13,6 @@ using Layer = Scene::Layer;
 namespace Scene {
 
 	class SceneManager : public Core::IUpdatable, public Core::IRenderable{
-	private:
-		std::vector<std::unique_ptr<Layer>> layerStack;
 
 	public:
 		SceneManager() {}
@@ -27,7 +25,7 @@ namespace Scene {
 
 		void update(float deltaTime) override
 		{
-			for (const auto& layer : layerStack) 
+			for (const auto& layer : m_layerStack) 
 			{
 				if(layer) layer->update(deltaTime);
 			}
@@ -35,7 +33,7 @@ namespace Scene {
 
 		void render() override
 		{
-			for (const auto& layer : layerStack)
+			for (const auto& layer : m_layerStack)
 			{
 				if (layer) layer->render();
 			}
@@ -45,12 +43,15 @@ namespace Scene {
 		void pushLayer(Args&&... args)
 		{
 			static_assert(std::is_base_of_v<Layer, TLayer>, "TLayer must derive from Scene::Layer");
-			layerStack.push_back(std::make_unique<TLayer>(std::forward<Args>(args)...));
+			m_layerStack.push_back(std::make_unique<TLayer>(std::forward<Args>(args)...));
 		}
 
-		std::size_t getLayerCount() const noexcept { return layerStack.size(); }
+		std::size_t getLayerCount() const noexcept { return m_layerStack.size(); }
 
-		void clearLayers() noexcept { layerStack.clear(); }
+		void clearLayers() noexcept { m_layerStack.clear(); }
+
+	private:
+		std::vector<std::unique_ptr<Layer>> m_layerStack;
 	};
 
 }

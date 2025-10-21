@@ -7,9 +7,6 @@ namespace DebugUtils
 
 	class FullScreenToggle
 	{
-	private:
-		static int windowedWidth;
-		static int windowedHeight;
 
 	public:
 
@@ -27,7 +24,7 @@ namespace DebugUtils
 			else
 			{
 				ToggleFullScreen();
-				SetWindowSize(windowedWidth, windowedHeight);
+				SetWindowSize(s_windowedWidth, s_windowedHeight);
 			}
 		}
 
@@ -51,7 +48,9 @@ namespace DebugUtils
 			}
 			else return GetScreenHeight();
 		}
-
+	private:
+		static int s_windowedWidth;
+		static int s_windowedHeight;
 	};
 
 }

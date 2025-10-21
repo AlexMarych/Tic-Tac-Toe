@@ -20,8 +20,7 @@ namespace EventSystem
 
     class UIEvent : public InputEvent
     {
-	private:
-        KeyAction m_Action;
+
 	public:
         UIEvent(const std::string& name, KeyAction action)
             : InputEvent(name), m_Action(action) 
@@ -29,14 +28,12 @@ namespace EventSystem
         }
 
         KeyAction GetAction() const { return m_Action; }
+    private:
+        KeyAction m_Action;
     };
 
     class KeyboardEvent : public InputEvent
     {
-    private:
-        int m_KeyCode;
-        KeyAction m_Action;
-
     public:
         KeyboardEvent(int keyCode, KeyAction action, const std::string& name)
             : InputEvent(name), m_KeyCode(keyCode), m_Action(action) {
@@ -44,7 +41,10 @@ namespace EventSystem
 
         int GetKeyCode() const { return m_KeyCode; }
         KeyAction GetAction() const { return m_Action; }
-    
+
+    private:
+        int m_KeyCode;
+        KeyAction m_Action;
     };
 
     enum class MouseAction
@@ -56,10 +56,7 @@ namespace EventSystem
     };
 
 
-    class MouseEvent : public InputEvent {
-    private:
-        int m_MouseButton{ 0 };
-		MouseAction m_Action;   
+    class MouseEvent : public InputEvent {  
     public:
         MouseEvent(int mouseButton, MouseAction action, const std::string& name)
             : InputEvent(name), m_MouseButton(mouseButton), m_Action(action) {
@@ -67,6 +64,9 @@ namespace EventSystem
 
         int GetMouseButton() const { return m_MouseButton; }
         MouseAction GetAction() const { return m_Action; }
+    private:
+        int m_MouseButton{ 0 };
+        MouseAction m_Action;
     };
 
     

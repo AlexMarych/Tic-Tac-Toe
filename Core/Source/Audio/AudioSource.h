@@ -6,98 +6,99 @@
 
 namespace Audio
 {
-class AudioSource
-{
-private:
-    Sound sound{};
-    bool loaded{false};
-
-public:
-    AudioSource() noexcept = default;
-    virtual ~AudioSource() noexcept { unload(); }
-
-    AudioSource(const AudioSource&) = delete;
-    AudioSource& operator=(const AudioSource&) = delete;
-
-    AudioSource(AudioSource&& other) noexcept
-        : sound(other.sound), loaded(other.loaded)
+    class AudioSource
     {
-        other.sound = {};
-        other.loaded = false;
-    }
 
-    AudioSource& operator=(AudioSource&& other) noexcept
-    {
-        if (this != &other) {
-            unload();
-            sound = other.sound;
-            loaded = other.loaded;
-            other.sound = {};
-            other.loaded = false;
+    public:
+        AudioSource() noexcept = default;
+        virtual ~AudioSource() noexcept { unload(); }
+
+        AudioSource(const AudioSource&) = delete;
+        AudioSource& operator=(const AudioSource&) = delete;
+
+        AudioSource(AudioSource&& other) noexcept
+            : m_sound(other.m_sound), m_loaded(other.m_loaded)
+        {
+            other.m_sound = {};
+            other.m_loaded = false;
         }
-        return *this;
-    }
 
-    
-    bool loadFromFile(const std::string& filePath)
-    {
-        if (loaded) unload();
-        std::string fullPath = std::string(ASSETS_PATH) + filePath;
-        sound = LoadSound(fullPath.c_str());
-        loaded = (sound.frameCount != 0 || sound.stream != 0);
-        if (!loaded) {
-            DebugUtils::println(std::string("AudioSource: failed to load '") + fullPath + "'");
+        AudioSource& operator=(AudioSource&& other) noexcept
+        {
+            if (this != &other) {
+                unload();
+                m_sound = other.m_sound;
+                m_loaded = other.m_loaded;
+                other.m_sound = {};
+                other.m_loaded = false;
+            }
+            return *this;
         }
-        return loaded;
-    }
 
-    static AudioSource createFromFile(const std::string& filePath)
-    {
-        AudioSource src;
-        src.loadFromFile(filePath);
-        return src;
-    }
 
-    void unload() noexcept
-    {
-        if (!loaded) return;
-        stop();
-        UnloadSound(sound);
-        sound = {};
-        loaded = false;
-    }
-
-    void play()
-    {
-        if (!loaded) {
-            DebugUtils::println("AudioSource::play: sound not loaded");
-            return;
+        bool loadFromFile(const std::string& filePath)
+        {
+            if (m_loaded) unload();
+            std::string fullPath = filePath;
+            m_sound = LoadSound(fullPath.c_str());
+            m_loaded = (m_sound.frameCount != 0 || m_sound.stream.buffer != nullptr);
+            if (!m_loaded) {
+                DebugUtils::println(std::string("AudioSource: failed to load '") + fullPath + "'");
+            }
+            return m_loaded;
         }
-        DebugUtils::println("AudioSource: play");
-        PlaySound(sound);
-    }
 
-    void pause()
-    {
-        if (isPlaying()) PauseSound(sound);
-    }
+        static AudioSource createFromFile(const std::string& filePath)
+        {
+            AudioSource src;
+            src.loadFromFile(filePath);
+            return src;
+        }
 
-    void resume()
-    {
-        if (!isPlaying() && loaded) ResumeSound(sound);
-    }
+        void unload() noexcept
+        {
+            if (!m_loaded) return;
+            stop();
+            UnloadSound(m_sound);
+            m_sound = {};
+            m_loaded = false;
+        }
 
-    void stop()
-    {
-        if (isPlaying()) StopSound(sound);
-    }
+        void play()
+        {
+            if (!m_loaded) {
+                DebugUtils::println("AudioSource::play: sound not loaded");
+                return;
+            }
+            DebugUtils::println("AudioSource: play");
+            PlaySound(m_sound);
+        }
 
-    bool isPlaying() const
-    {
-        if (!loaded) return false;
-        return IsSoundPlaying(sound);
-    }
+        void pause()
+        {
+            if (isPlaying()) PauseSound(m_sound);
+        }
 
-    bool isLoaded() const noexcept { return loaded; }
-};
-} 
+        void resume()
+        {
+            if (!isPlaying() && m_loaded) ResumeSound(m_sound);
+        }
+
+        void stop()
+        {
+            if (isPlaying()) StopSound(m_sound);
+        }
+
+        bool isPlaying() const
+        {
+            if (!m_loaded) return false;
+            return IsSoundPlaying(m_sound);
+        }
+
+        bool isLoaded() const noexcept { return m_loaded; }
+
+    private:
+        Sound m_sound{};
+        bool m_loaded{ false };
+    };
+}

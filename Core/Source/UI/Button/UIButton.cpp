@@ -5,26 +5,26 @@
 
 namespace UI {
 
-    bool UIComponent::guiSliderDragging = false;
+    bool UIComponent::s_guiSliderDragging = false;
 
     void UIButton::update(float deltaTime) {
-        if (state == ButtonState::DISABLED || UIComponent::isSliderDragging())
+        if (m_state == ButtonState::DISABLED || UIComponent::isSliderDragging())
             return;
 
-        state = ButtonState::NORMAL;
+        m_state = ButtonState::NORMAL;
 
         Vector2 mousePoint = GetMousePosition();
 
         if (UIComponent::isInBounds(mousePoint)) {
             if (IsMouseButtonDown(MOUSE_LEFT_BUTTON)) {
-                state = ButtonState::HOLDED;
+                m_state = ButtonState::HOLDED;
             } else {
-                state = ButtonState::FOCUSED;
+                m_state = ButtonState::FOCUSED;
             }
 
             if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON)) {
                 handleEvent();
-                state = ButtonState::PRESSED;
+                m_state = ButtonState::PRESSED;
             }
         }
     }
@@ -33,7 +33,7 @@ namespace UI {
         if (!UIComponent::isVisible())
             return;
 
-        switch (state) {
+        switch (m_state) {
         case ButtonState::PRESSED:
             Animatable::play("pressed");
             break;

@@ -16,36 +16,12 @@ namespace Core {
 
 	class Game
 	{
-	private: 
-		bool isRunning;
-		GameConfig config;
-		std::unique_ptr<Scene::SceneManager> sceneManager;
-
-
-		void initWindow()
-		{
-			SetConfigFlags(FLAG_WINDOW_RESIZABLE);
-			InitWindow(config.screenWidth, config.screenHeight, config.windowTitle.c_str());
-			SetTargetFPS(config.fps);
-		}
-
-		void shutdown() noexcept
-		{
-			if (sceneManager) 
-			{
-				sceneManager.reset();
-			}
-			if (!isRunning) 
-			{
-				CloseWindow();
-			}
-		}
 
 	public:
 		explicit Game(const GameConfig& cfg)
-			: config(cfg)
-			, sceneManager(std::make_unique<Scene::SceneManager>())
-			, isRunning(false)
+			: m_config(cfg)
+			, m_sceneManager(std::make_unique<Scene::SceneManager>())
+			, m_isRunning(false)
 		{
 			initWindow();
 		}
@@ -63,13 +39,13 @@ namespace Core {
 		
 		void stop() noexcept 
 		{
-			isRunning = false;
+			m_isRunning = false;
 		}
 
 		void Run() {
-			isRunning = true;
+			m_isRunning = true;
 
-			while (isRunning) {
+			while (m_isRunning) {
 
 				if (WindowShouldClose()) {
 					stop();
@@ -79,9 +55,33 @@ namespace Core {
 				BeginDrawing();
 				ClearBackground(RAYWHITE);
 				
-				sceneManager->update(GetFrameTime());
+				m_sceneManager->update(GetFrameTime());
 
 				EndDrawing();
+			}
+		}
+
+	private:
+		bool m_isRunning{};
+		GameConfig m_config{};
+		std::unique_ptr<Scene::SceneManager> m_sceneManager{};
+
+		void initWindow()
+		{
+			SetConfigFlags(FLAG_WINDOW_RESIZABLE);
+			InitWindow(m_config.screenWidth, m_config.screenHeight, m_config.windowTitle.c_str());
+			SetTargetFPS(m_config.fps);
+		}
+
+		void shutdown() noexcept
+		{
+			if (m_sceneManager)
+			{
+				m_sceneManager.reset();
+			}
+			if (!m_isRunning)
+			{
+				CloseWindow();
 			}
 		}
 	};

@@ -1,6 +1,6 @@
 #pragma once
 
-#include <nlohmann/json.h>
+#include <nlohmann/json.hpp>
 #include <fstream>
 #include <string>
 #include <iostream>
@@ -9,23 +9,16 @@
 using json = nlohmann::json;
 
 class FileManager {
-private:
-	inline static const std::string basePath = ASSETS_PATH;
 
 public:
 
-	static nlohmann::json loadJson(std::string& relativePath = "", std::string& fileName)
+	static nlohmann::json loadJson(const std::string& basePath, const std::string& relativePath, std::string& fileName)
 	{
 		if (fileName.length() < 5 || fileName.substr(fileName.length() - 5) != ".json")
 			fileName += ".json";
 
 
 		std::ifstream fromfile(basePath + relativePath + fileName);
-
-		if (!fromfile.is_open()) {
-			DebugUtils::println(std::string("FileManager::loadJson: parse error: ") + e.what());
-			return std::nullopt;
-		}
 
 		nlohmann::json j;
 		try {
@@ -40,14 +33,16 @@ public:
 		return j;
 	}
 
-	static void saveJson(std::string& relativePath, std::string& fileName, const nlohmann::json& j)
+	static void saveJson(const std::string& basePath, const std::string& relativePath, std::string& fileName, const nlohmann::json& j)
 	{
 
 		if (fileName.length() < 5 || fileName.substr(fileName.length() - 5) != ".json")
 			fileName += ".json";
+
+		auto fullPath = std::filesystem::path(basePath + relativePath + fileName);
 		try 
 		{
-			std::ofstream outFile(basePath + relativePath + fileName);
+			std::ofstream outFile(fullPath);
 			if (!outFile.is_open()) {
 				DebugUtils::println(std::string("FileManager::saveJson: could not open file for write: ") + fullPath.string());
 				return;

@@ -11,9 +11,6 @@ namespace EventSystem
 {
     template<typename T>
     class EventBus {
-    private:
-        EventBus() = default;
-        std::vector<IEventListener*> m_Listeners;
 
     public:
         EventBus(const EventBus&) = delete;
@@ -42,5 +39,9 @@ namespace EventSystem
             for (auto* listener : m_Listeners)
                 listener->OnEvent(e); 
         }
+
+    private:
+        EventBus() = default;
+        std::vector<IEventListener*> m_Listeners;
     };
 }
