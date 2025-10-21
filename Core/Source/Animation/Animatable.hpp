@@ -13,18 +13,18 @@ namespace Animation {
 
 	private:
 		std::unique_ptr<AnimationStateMachine> animator;
-		std::unordered_map<std::string, std::shared_ptr<AnimationState>> animations;
+		std::unordered_map<std::string, AnimationState*> animations;
 
 	public:
 		explicit Animatable(const Texture2D& animSheet, const Rectangle& destRect, int maxFrame)
 			: animator(std::make_unique<AnimationStateMachine>())
 		{
-			auto idle = std::make_shared<AnimationState>(animSheet, destRect, static_cast<float>(animSheet.width), static_cast<float>(animSheet.height), maxFrame);
+			auto idle = &AnimationState(animSheet, destRect, static_cast<float>(animSheet.width), static_cast<float>(animSheet.height), maxFrame);
 			addAnimation("idle", idle);
 		}
 
 		
-		void addAnimation(const std::string& name, std::shared_ptr<AnimationState> animation)
+		void addAnimation(const std::string& name, AnimationState* animation)
 		{
 			animations.emplace(name, std::move(animation));
 		}

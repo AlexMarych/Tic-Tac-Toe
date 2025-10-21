@@ -17,14 +17,14 @@ public:
 
     ~UIComponentAnimated() noexcept = default;
 
-    void addAnimation(const std::string& name, std::shared_ptr<Animation::AnimationState> animation)
+    void addAnimation(const std::string& name, Animation::AnimationState* animation)
     {
         Animation::Animatable::addAnimation(name, std::move(animation));
     }
 
     void addAnimation(const std::string& name, const Texture2D& sheet, const Rectangle& destRect, int maxFrame, float fps = 12.0f)
     {
-        auto anim = std::make_shared<Animation::AnimationState>(sheet, destRect,
+        auto anim = &Animation::AnimationState(sheet, destRect,
             static_cast<float>(sheet.width), static_cast<float>(sheet.height), maxFrame, fps);
         Animation::Animatable::addAnimation(name, std::move(anim));
     }

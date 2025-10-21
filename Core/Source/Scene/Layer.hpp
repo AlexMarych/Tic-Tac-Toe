@@ -14,8 +14,8 @@ namespace Scene
 	{
 	private:
 		
-		std::vector<std::shared_ptr<Core::IRenderable>> renderObjects;
-		std::vector<std::shared_ptr<Core::IUpdatable>> updateObjects;
+		std::vector<Core::IRenderable*> renderObjects;
+		std::vector<Core::IUpdatable*> updateObjects;
 		
 	public:
 		Layer() = default;
@@ -40,34 +40,37 @@ namespace Scene
 		}
 
 		template <typename T>
-		void addObject(const std::shared_ptr<T>& obj) {
+		void addObject(T* obj) {
+
+			static_assert(std::is_base_of<Core::IUpdatable, T>::value || std::is_base_of<Core::IRenderable, T>::value,
+				"Type T must derive from IUpdatable or IRenderable");
 
 			if (!obj) return;
 
-			if (auto u = std::dynamic_pointer_cast<IUpdatable>(obj)) {
+			if (auto u = dynamic_cast<Core::IUpdatable*>(obj)) {
 				updateObjects.push_back(u);
 			}
-			if (auto r = std::dynamic_pointer_cast<Renderable>(obj)) {
+			if (auto r = dynamic_cast<Core::IRenderable*>(obj)) {
 				renderObjects.push_back(r);
 			}
 		}
 
-		void addUpdatable(const std::shared_ptr<Core::IUpdatable>& obj)
+		void addUpdatable(Core::IUpdatable* obj)
 		{
 			if (obj) updateObjects.push_back(obj);
 		}
 
-		void addRenderable(const std::shared_ptr<Core::IRenderable>& obj)
+		void addRenderable(Core::IRenderable* obj)
 		{
 			if (obj) renderObjects.push_back(obj);
 		}
 
 		template <typename T>
-		void removeObject(const std::shared_ptr<T>& obj)
+		void removeObject(const T* obj)
 		{
 			if (!obj) return;
-			removeFromList(updateObjects_, obj);
-			removeFromList(renderObjects_, obj);
+			renderObjects.erase(std::remove(renderObjects.begin(), renderObjects.end(), obj), renderObjects.end());
+			updateObjects.erase(std::remove(updateObjects.begin(), updateObjects.end(), obj), updateObjects.end());
 		}
 
 		
@@ -77,29 +80,6 @@ namespace Scene
 			renderObjects.clear();
 		}
 
-		virtual void LoadFromJson(const nlohmann::json& data) override
-		{
-			// an example
-			/*if (data.contains("objects")) {
-
-				if (data["properties"].contains("text")) {
-					text = data["properties"]["text"].get<std::string>();
-				}
-			}*/
-		}
-
-		virtual nlohmann::json LoadToJson() override
-		{
-			// an example
-			/*std::map<std::string, nlohmann::json> properties;
-
-			properties["text"] = text;
-
-			nlohmann::json j = getJsonTemplate();
-			j["type"] = getClassName();
-			j["properties"] = properties;
-			return j;*/
-		}
 	};
 
 }
