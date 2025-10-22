@@ -27,7 +27,7 @@ namespace EventSystem
         {
         }
 
-        KeyAction GetAction() const { return m_Action; }
+        inline KeyAction GetAction() const { return m_Action; }
     private:
         KeyAction m_Action;
     };
@@ -39,8 +39,8 @@ namespace EventSystem
             : InputEvent(name), m_KeyCode(keyCode), m_Action(action) {
         }
 
-        int GetKeyCode() const { return m_KeyCode; }
-        KeyAction GetAction() const { return m_Action; }
+        inline int GetKeyCode() const { return m_KeyCode; }
+        inline KeyAction GetAction() const { return m_Action; }
 
     private:
         int m_KeyCode;
@@ -62,8 +62,8 @@ namespace EventSystem
             : InputEvent(name), m_MouseButton(mouseButton), m_Action(action) {
         }
 
-        int GetMouseButton() const { return m_MouseButton; }
-        MouseAction GetAction() const { return m_Action; }
+        inline int GetMouseButton() const { return m_MouseButton; }
+        inline MouseAction GetAction() const { return m_Action; }
     private:
         int m_MouseButton{ 0 };
         MouseAction m_Action;

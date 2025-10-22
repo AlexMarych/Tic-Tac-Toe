@@ -11,24 +11,19 @@ namespace UI {
 	{
 	
 	public:
-		explicit UIComponent(const Texture2D& texture, const Rectangle& destRect) noexcept
-			: Core::GameObject(texture, std::string(), destRect)
-			, m_visible(true)
-		{
-		}
+		explicit UIComponent(const Texture2D& texture, const Rectangle& destRect) noexcept;
+		virtual ~UIComponent() noexcept override;
 
-		~UIComponent() noexcept override = default;
-
-		void setVisible(bool isVisible) noexcept { m_visible = isVisible; }
-		bool isVisible() const noexcept { return m_visible; }
+		inline void setVisible(bool isVisible) noexcept { m_visible = isVisible; }
+		inline bool isVisible() const noexcept { return m_visible; }
 
 
-		virtual bool isInBounds(Vector2& point) { return CheckCollisionPointRec(point, m_bounds); }
+		virtual bool isInBounds(Vector2& point);
 
-		virtual void update(float deltaTime) override { GameObject::update(deltaTime); }
-		virtual void render() override { Renderable::render(); }
+		virtual void update(float deltaTime) override;
+		virtual void render() override;
 
-		bool static isSliderDragging() noexcept { return s_guiSliderDragging; }
+		inline bool static isSliderDragging() noexcept { return s_guiSliderDragging; }
 
 	private:
 		bool m_visible{ true };

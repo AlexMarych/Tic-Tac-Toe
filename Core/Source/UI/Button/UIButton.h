@@ -26,33 +26,17 @@ namespace UI {
 		ButtonState m_state = ButtonState::NORMAL;
 
 	public:
-		explicit UIButton(const Texture2D& texture, const std::string& text, const Rectangle& destRect)
-			: UIComponentAnimated(texture, destRect)
-			, UILabel(text, destRect)
-			, m_state(ButtonState::NORMAL)
-		{
-		}
-		~UIButton() override = default;
+		explicit UIButton(const Texture2D& texture, const std::string& text, const Rectangle& destRect);
+		virtual ~UIButton() override = default;
 
-		bool isPressed() const noexcept { return m_state == ButtonState::PRESSED; }
-		bool isHolded() const noexcept { return m_state == ButtonState::HOLDED; }
+		inline bool isPressed() const noexcept { return m_state == ButtonState::PRESSED; }
+		inline bool isHolded() const noexcept { return m_state == ButtonState::HOLDED; }
 
-		void setState(ButtonState newState) noexcept { m_state = newState; }
+		inline void setState(ButtonState newState) noexcept { m_state = newState; }
 
-		void addOnClick(const EventSystem::UIEvent& event)
-		{
-			m_onClick.push_back(event);
-		}
+		void addOnClick(const EventSystem::UIEvent& event);
 
-		void handleEvent()
-		{
-			for (auto event : m_onClick)
-			{
-				EventSystem::EventBus<EventSystem::UIEvent>::Get().Dispatch(event);
-			}
-		}
-
-
+		void handleEvent();
 		void update(float deltaTime) override;
 		void render() override;
 

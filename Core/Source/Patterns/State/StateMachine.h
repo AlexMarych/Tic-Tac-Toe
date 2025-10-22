@@ -12,26 +12,16 @@ public:
 
 class StateMachine
 {
-
 public:
 	StateMachine() noexcept = default;
-	virtual ~StateMachine() noexcept = default;
+	virtual ~StateMachine() noexcept;
 
 	StateMachine(const StateMachine&) = delete;
 	StateMachine& operator=(const StateMachine&) = delete;
 
-	virtual inline IState* getCurrentState() const noexcept { return m_currentState; }
-
-	virtual void update(float deltaTime) noexcept { m_currentState->update(deltaTime); }
-
-	virtual void setState(IState& newState) noexcept
-	{
-		if (m_currentState == &newState) return;
-
-		if (m_currentState) m_currentState->exit();
-		m_currentState = &newState;
-		if (m_currentState) m_currentState->enter();
-	}
+	inline virtual IState* getCurrentState() const noexcept { return m_currentState; }
+	virtual void update(float deltaTime) noexcept;
+	virtual void setState(IState& newState) noexcept;
 
 private:
 	IState* m_currentState{};

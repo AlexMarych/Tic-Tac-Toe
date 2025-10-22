@@ -9,30 +9,21 @@ namespace Core {
 	class GameObject : public IUpdatable, public Renderable {
 
 	public:
-		GameObject() noexcept = default;
+        GameObject() noexcept = default;
+        explicit GameObject(const Texture2D& texture, const std::string& name, const Rectangle& destRect);
 
-		explicit GameObject(const Texture2D& texture, const std::string& name, const Rectangle& destRect) 
-			: Renderable(texture, destRect), m_active(true), m_name(name)
-		{
-		}
+        ~GameObject() noexcept override = default;
 
-		~GameObject() noexcept override = default;
+        void update(float deltaTime) override;
 
-		
-		void update(float) override {} 
+        inline void setActive(bool isActive) noexcept { m_active = isActive; }
+        inline bool isActive() const noexcept { return m_active; }
 
-		
-		void setActive(bool isActive) noexcept { m_active = isActive; }
-		bool isActive() const noexcept { return m_active; }
+        inline void setName(const std::string& newName) { m_name = newName; }
+        inline const std::string& getName() const noexcept { return m_name; }
 
-		
-		void setName(const std::string& newName) { m_name = newName; }
-		const std::string& getName() const noexcept { return m_name; }
-
-		
-		using Renderable::setPosition; 
-		void setPosition(const Rectangle& rect) { Renderable::setPosition(rect.x, rect.y); }
-
+        using Renderable::setPosition;
+        void setPosition(const Rectangle& rect);
 	private:
 		bool m_active{ true };
 		std::string m_name{};

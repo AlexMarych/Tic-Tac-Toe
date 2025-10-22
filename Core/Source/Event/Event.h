@@ -16,8 +16,8 @@ namespace EventSystem {
 
         virtual ~Event() noexcept = default;
 
-        const std::string& getName() const noexcept { return m_name; }
-		bool isHandled() const noexcept { return m_handled; }
+        inline const std::string& getName() const noexcept { return m_name; }
+        inline bool isHandled() const noexcept { return m_handled; }
 
     private:
         std::string m_name{};

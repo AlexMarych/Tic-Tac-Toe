@@ -11,7 +11,8 @@ namespace Factory {
 		virtual ~IProduct() = default;
 		virtual void LoadFromJson(const nlohmann::json& data) = 0;
 		virtual nlohmann::json LoadToJson() = 0;
-		virtual std::string getClassName() const {
+		
+		inline virtual std::string getClassName() const {
 			std::string name = typeid(*this).name(); 
 
 			if (name.size() > c_classNameOffset) {
@@ -21,7 +22,7 @@ namespace Factory {
 			return name;
 		}
 
-		virtual nlohmann::json getJsonTemplate() const { return c_jsonTemplate; }
+		inline virtual nlohmann::json getJsonTemplate() const { return c_jsonTemplate; }
 
 	private:
 		const int c_classNameOffset = 6;
