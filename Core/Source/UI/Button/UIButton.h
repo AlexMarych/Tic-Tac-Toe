@@ -22,17 +22,15 @@ namespace UI {
 
 	class UIButton : public UIComponent, public UILabel, public Animation::Animatable
 	{
-	private:
-		std::vector <EventSystem::UIEvent> m_onClick;
-
-		ButtonState m_state = ButtonState::NORMAL;
-
 	public:
-		explicit UIButton(const Texture2D& texture, const std::string& text, const Rectangle& destRect);
+		explicit UIButton(const Texture2D& texture, const std::string& text, const Rectangle& destRect, const RectangleOffset& offset) noexcept;
 		virtual ~UIButton() override = default;
 
 		inline bool isPressed() const noexcept { return m_state == ButtonState::PRESSED; }
 		inline bool isHolded() const noexcept { return m_state == ButtonState::HOLDED; }
+
+		inline void setOffset(const RectangleOffset& offset) noexcept { m_textOffset = offset; }
+		inline const RectangleOffset& getOffset() const noexcept { return m_textOffset; }
 
 		inline void setState(ButtonState newState) noexcept { m_state = newState; }
 
@@ -42,6 +40,10 @@ namespace UI {
 		void update(float deltaTime) override;
 		void render() override;
 
+	private:
+		std::vector <EventSystem::UIEvent> m_onClick{};
+		RectangleOffset m_textOffset{0,0};
+		ButtonState m_state = ButtonState::NORMAL;
 	};
 
 }

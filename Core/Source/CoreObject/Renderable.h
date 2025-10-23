@@ -16,7 +16,6 @@ namespace Core {
 
         explicit Renderable(const Texture2D& texture, const Rectangle& destRect) noexcept;
         explicit Renderable(const Rectangle& destRect) noexcept;
-
         virtual ~Renderable() noexcept override = default;
 
         inline void setOrigin(const Vector2& pivot) noexcept { m_origin = pivot; }
@@ -34,6 +33,8 @@ namespace Core {
         inline const Texture2D& getTexture() const noexcept { return m_texture; }
         inline Rectangle getSourceRect() const noexcept { return m_sourceRect; }
 
+		virtual void scale() noexcept;   
+
         void render() override;
     private:
         Texture2D m_texture{};
@@ -42,5 +43,9 @@ namespace Core {
         Rectangle m_destRect{ 0.0f, 0.0f, 0.0f, 0.0f };
         float m_rotation{ 0.0f };
         Color m_tint{ WHITE };
+    
+    protected:
+        float m_scaleX{};
+        float m_scaleY{};
     };
 }

@@ -3,11 +3,12 @@
 
 namespace UI {
 
-    UIButton::UIButton(const Texture2D& texture, const std::string& text, const Rectangle& destRect)
+    UIButton::UIButton(const Texture2D& texture, const std::string& text, const Rectangle& destRect, const RectangleOffset& offset) noexcept
         : UIComponent(texture, text, destRect)
-        , UILabel(text, destRect)
+        , UILabel(text, offset + destRect, GetFontDefault())
 		, Animatable(texture, destRect)
         , m_state(ButtonState::NORMAL)
+		, m_textOffset(offset)
     {
     }
 

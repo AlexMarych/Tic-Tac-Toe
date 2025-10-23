@@ -1,5 +1,6 @@
 
 #include "Renderable.h"
+#include "Game/Game.h"
 
 namespace Core {
 
@@ -30,9 +31,27 @@ namespace Core {
     {
     }
 
+    void Renderable::scale() noexcept {
+        m_scaleX = (float)GetScreenWidth() / (float)Game::GetConfig().screenWidth;
+        m_scaleY = (float)GetScreenHeight() / (float)Game::GetConfig().screenHeight;
+    }
+
     void Renderable::render()
     {
-        DrawTexturePro(m_texture, m_sourceRect, m_destRect, m_origin, m_rotation, m_tint);
+        scale();
+		
+        DrawTexturePro(
+            m_texture,
+            m_sourceRect,
+            {
+                    m_destRect.x * m_scaleX,
+                    m_destRect.y * m_scaleY,
+                    m_destRect.width * m_scaleX,
+                    m_destRect.height * m_scaleY
+            },
+            m_origin, 
+            m_rotation, 
+            m_tint);
     }
 
 } 

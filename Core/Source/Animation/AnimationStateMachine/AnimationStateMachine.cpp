@@ -30,13 +30,13 @@ namespace Animation {
     }
 
     void AnimationState::render() {
-        Rectangle source{
+        this->setSourceRect({
             static_cast<float>(m_frame) * m_width,
             0.0f,
             m_width,
             m_height
-        };
-        DrawTexturePro(getTexture(), source, getPosition(), getOrigin(), getRotation(), getTint());
+        });
+		Renderable::render();
     }
 
 

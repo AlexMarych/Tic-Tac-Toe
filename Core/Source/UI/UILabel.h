@@ -6,10 +6,21 @@
 
 namespace UI {
 
+    struct RectangleOffset
+    {
+		float offset_x{0.f};
+		float offset_y{0.f};
+
+        Rectangle operator+(const Rectangle& other) const {
+            return { other.x + offset_x, other.y + offset_y, other.width, other.height};
+        }
+    };
+
     class UILabel : public Core::Renderable 
     {
     public:
-        explicit UILabel(const std::string& text, const Rectangle& destRect, const Font& font = GetFontDefault()) noexcept;
+        explicit UILabel(const std::string& text, const Rectangle& destRect, const Font& font) noexcept;
+
         ~UILabel() noexcept override;
 
         inline void setSpacing(int newSpacing) noexcept { m_spacing = newSpacing; }
