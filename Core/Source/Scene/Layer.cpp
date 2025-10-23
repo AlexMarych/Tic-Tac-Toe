@@ -13,14 +13,16 @@ namespace Scene
     void Layer::update(float deltaTime)
     {
         for (const auto& obj : updateObjects) {
-            if (obj) obj->update(deltaTime);
+            if (!obj) continue;
+            obj->update(deltaTime);
         }
     }
 
     void Layer::render()
     {
         for (const auto& obj : renderObjects) {
-            if (obj) obj->render();
+            if (!obj) continue; 
+            obj->render();
         }
     }
 

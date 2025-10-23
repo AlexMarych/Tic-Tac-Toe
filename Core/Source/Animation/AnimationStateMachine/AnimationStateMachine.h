@@ -12,7 +12,7 @@ namespace Animation {
         AnimationState() noexcept = default;
         virtual ~AnimationState() = default;
 
-        explicit AnimationState(const Texture2D& texture, const Rectangle& destRect, float width, float height, int maxFrame, float fps = 12.0f);
+        explicit AnimationState(const Texture2D& texture, const Rectangle& destRect, float width, float height, int maxFrame, float fps);
 
         void update(float deltaTime) noexcept override;
 
@@ -25,6 +25,7 @@ namespace Animation {
         int m_frame{ 0 };
         float m_runningTime{ 0.0f };
         float m_width{ 0.0f };
+        float m_origin{ 0.0f };
         float m_height{ 0.0f };
         int m_maxFrameCount{ 0 };
         float m_updateTime{ 1.0f / 12.0f };

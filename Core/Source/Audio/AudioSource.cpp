@@ -27,12 +27,19 @@ namespace Audio
         return *this;
     }
 
+    bool isSoundValid(const Sound& sound) noexcept
+    {
+        bool hasFrames = (sound.frameCount != 0);
+        bool hasBuffer = (sound.stream.buffer != nullptr);
+        return hasFrames || hasBuffer;
+	}
+
     bool AudioSource::loadFromFile(const std::string& filePath)
     {
         if (m_loaded) unload();
-        std::string fullPath = filePath;
+        auto fullPath = filePath;
         m_sound = LoadSound(fullPath.c_str());
-        m_loaded = (m_sound.frameCount != 0 || m_sound.stream.buffer != nullptr);
+        m_loaded = isSoundValid(m_sound);
         if (!m_loaded) {
             DebugUtils::println("AudioSource: failed to load '" + fullPath + "'");
         }

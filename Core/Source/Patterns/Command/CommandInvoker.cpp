@@ -18,7 +18,7 @@ namespace Command
     {
         if (m_undoStack.empty()) return;
 
-        auto& command = m_undoStack.top();
+        auto command = std::move(m_undoStack.top());
         command->undo();
         m_redoStack.push(std::move(m_undoStack.top()));
         m_undoStack.pop();
@@ -28,7 +28,7 @@ namespace Command
     {
         if (m_redoStack.empty()) return;
 
-        auto& command = m_redoStack.top();
+        auto command = std::move( m_redoStack.top());
         command->execute();
         m_undoStack.push(std::move(m_redoStack.top()));
         m_redoStack.pop();

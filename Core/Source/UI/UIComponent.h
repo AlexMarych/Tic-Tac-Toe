@@ -18,7 +18,7 @@ namespace UI {
 		inline bool isVisible() const noexcept { return m_visible; }
 
 
-		virtual bool isInBounds(Vector2& point);
+		virtual bool isInBounds(const Vector2& point) const;
 
 		virtual void update(float deltaTime) override;
 		virtual void render() override;

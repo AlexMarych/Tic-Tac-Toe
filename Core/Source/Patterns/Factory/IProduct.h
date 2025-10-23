@@ -5,30 +5,26 @@
 
 namespace Factory {
 
+	using json = nlohmann::json;
+
+	const json TEMPLATE = {
+				{"type", ""},
+				{"properties", ""}
+	};
+
 	class IProduct {
 	
 	public:
 		virtual ~IProduct() = default;
-		virtual void LoadFromJson(const nlohmann::json& data) = 0;
-		virtual nlohmann::json LoadToJson() = 0;
+		virtual void LoadFromJson(const json& data) = 0;
+		virtual json LoadToJson() = 0;
 		
-		inline virtual std::string getClassName() const {
-			std::string name = typeid(*this).name(); 
+		virtual std::string getClassName() const;
 
-			if (name.size() > c_classNameOffset) {
-				name.erase(0, c_classNameOffset);
-			}
-
-			return name;
-		}
-
-		inline virtual nlohmann::json getJsonTemplate() const { return c_jsonTemplate; }
+		inline virtual json getJsonTemplate() const { return TEMPLATE; }
 
 	private:
 		const int c_classNameOffset = 6;
-		const nlohmann::json c_jsonTemplate = {
-				{"type", ""},
-				{"properties", ""}
-		};
+
 	};
 }

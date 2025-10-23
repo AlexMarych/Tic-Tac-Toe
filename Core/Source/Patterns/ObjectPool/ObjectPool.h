@@ -11,11 +11,14 @@ namespace Pool
 	class ObjectPool {
 
 	public:
-		ObjectPool(int defoultSize, int maxSize)
-			: m_defoultSize(defoultSize)
+		ObjectPool(int defaultSize, int maxSize)
+			: m_defaultSize(defaultSize)
 			, m_maxSize(maxSize)
 		{
-			assert(m_defoultSize >= 0 && m_maxSize > 0 && m_defoultSize <= m_maxSize);
+			assert(m_defoultSize >= 0 &&
+				m_maxSize > 0 &&
+				m_defoultSize <= m_maxSize);
+
 			for (int i = 0; i < m_defoultSize; ++i) {
 				m_pool.push(std::make_unique<T>());
 			}
@@ -23,15 +26,15 @@ namespace Pool
 
 		virtual ~ObjectPool() = default;
 
-		virtual std::unique_ptr<T> get() 
+		T* get() 
 		{
 			std::unique_ptr<T> obj;
-			if (pool_.empty()) {
+			if (m_pool.empty()) {
 				obj = std::make_unique<T>();
 			}
 			else {
-				obj = std::move(pool_.top());
-				pool_.pop();
+				obj = std::move(m_pool.top());
+				m_pool.pop();
 			}
 			onGet(obj.get());
 			return obj;
@@ -39,9 +42,13 @@ namespace Pool
 
 		virtual void ReleaseObject(std::unique_ptr<T> obj) {
 			if (!obj) return;
+
 			onRelease(obj.get());
-			if (static_cast<int>(pool_.size()) < maxSize_) {
-				pool_.push(std::move(obj));
+
+			const bool hasSpace = static_cast<int>(m_pool.size()) < m_maxSize;
+			
+			if (hasSpace) {
+				m_pool.push(std::move(obj));
 			}
 			else {
 				onDestroy(obj.get());
@@ -50,12 +57,12 @@ namespace Pool
 
 		}
 
-		virtual void onRelease(T* obj) {}
-		virtual void onGet(T* obj) {}
-		virtual void onDestroy(T* obj) {}
+		virtual void onRelease(T* obj) noexcept{}
+		virtual void onGet(T* obj) noexcept {}
+		virtual void onDestroy(T* obj) noexcept {}
 
 	private:
-		std::stack<std::unique_ptr<T>()> m_pool{};
+		std::stack<std::unique_ptr<T>> m_pool{};
 
 		int m_maxSize{};
 		int m_defoultSize{};

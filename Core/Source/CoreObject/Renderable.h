@@ -22,16 +22,16 @@ namespace Core {
         inline void setPosition(float x, float y) noexcept { m_destRect.x = x; m_destRect.y = y; }
         inline void setPosition(const Rectangle& rect) noexcept { m_destRect = rect; }
         inline void setRotation(float angle) noexcept { m_rotation = angle; }
-        inline void setTint(Color color) noexcept { m_tint = color; }
+        inline void setTint(const Color& color) noexcept { m_tint = color; }
         inline void setSourceRect(const Rectangle& src) noexcept { m_sourceRect = src; }
         inline void setTexture(const Texture2D& tex) noexcept { m_texture = tex; }
 
         inline float getRotation() const noexcept { return m_rotation; }
-        inline Color getTint() const noexcept { return m_tint; }
-        inline Rectangle getPosition() const noexcept { return m_destRect; }
-        inline Vector2 getOrigin() const noexcept { return m_origin; }
+        inline const Color& getTint() const noexcept { return m_tint; }
+        inline const Rectangle& getPosition() const noexcept { return m_destRect; }
+        inline const Vector2& getOrigin() const noexcept { return m_origin; }
         inline const Texture2D& getTexture() const noexcept { return m_texture; }
-        inline Rectangle getSourceRect() const noexcept { return m_sourceRect; }
+        inline const Rectangle& getSourceRect() const noexcept { return m_sourceRect; }
 
 		virtual void scale() noexcept;   
 

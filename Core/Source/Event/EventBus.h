@@ -31,13 +31,17 @@ namespace EventSystem
 
         void RemoveListener(IEventListener* listener)
         {
-            std::erase(m_Listeners, listener);
+            auto it = std::remove(m_Listeners.begin(), m_Listeners.end(), listener);
+            if (it != m_Listeners.end()) {
+                m_Listeners.erase(it, m_Listeners.end());
+            }
         }
 
         void Dispatch(T& e)
         {
-            for (auto* listener : m_Listeners)
-                listener->OnEvent(e); 
+            for (auto* listener : m_Listeners) {
+                listener->OnEvent(e);
+            }
         }
 
     private:

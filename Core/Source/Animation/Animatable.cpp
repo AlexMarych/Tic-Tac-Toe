@@ -3,26 +3,39 @@
 
 namespace Animation {
 
+	constexpr int DEFAULT_FPS = 12.0f;
+
 	Animatable::Animatable(const Texture2D& animSheet, const Rectangle& destRect, int maxFrame)
 		: m_animator(std::make_unique<StateMachine<AnimationState>>())
 	{
-		auto idle = std::make_unique<AnimationState>(animSheet, destRect,
-			static_cast<float>(animSheet.width),
-			static_cast<float>(animSheet.height),
-			maxFrame); 
+		auto width = static_cast<float>(animSheet.width);
+		auto height = static_cast<float>(animSheet.height);
+
+		auto idle = std::make_unique<AnimationState>(
+			animSheet,
+			destRect,
+			width,
+			height,
+			maxFrame,
+			DEFAULT_FPS
+		); 
 		addAnimation("idle", std::move(idle));
+
 		play("idle");
 	}
 
 	void Animatable::addAnimation(const std::string& name, std::unique_ptr<AnimationState> animation)
 	{
-		m_animations.emplace(name, std::move(animation));
+		m_animations.emplace(name, 	std::move(animation));
 	}
 
 	void Animatable::addAnimation(const std::string& name, const Texture2D& sheet, const Rectangle& destRect, int maxFrame, float fps)
 	{
-		auto anim = std::make_unique<AnimationState>(sheet, destRect,
-			static_cast<float>(sheet.width), static_cast<float>(sheet.height), maxFrame, fps);
+		auto width = static_cast<float>(sheet.width);
+		auto height = static_cast<float>(sheet.height);
+
+		auto anim = std::make_unique<AnimationState>(sheet, destRect,width,height,maxFrame, fps);
+
 		addAnimation(name, std::move(anim));
 	}
 
@@ -34,15 +47,19 @@ namespace Animation {
 			throw std::runtime_error("Animatable::play: no animations available");
 		}
 
-		auto it = m_animations.find(animationName);
+		const auto& it = m_animations.find(animationName);
 		if (it != m_animations.end() && it->second) {
-			m_animator->setState(std::move(it->second));
+
+			m_animator->setState(	std::move(it->second));
+
 			m_currentAnimation = it->first;
 		}
 		else {
 
-			m_animator->setState(move(m_animations.begin()->second));
-			m_currentAnimation = m_animations.begin()->first;
+			auto it = m_animations.begin();
+
+			m_animator->setState(std::move(it->second));
+			m_currentAnimation = it->first;
 			DebugUtils::println(std::string("Error: animation '") + animationName + "' does not exist");
 		}
 	}

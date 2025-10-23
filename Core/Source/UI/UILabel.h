@@ -6,6 +6,8 @@
 
 namespace UI {
 
+    const static Color defaultColor = BLACK;
+
     struct RectangleOffset
     {
 		float offset_x{0.f};
@@ -42,6 +44,7 @@ namespace UI {
         int m_spacing{};
         Color m_color{};
         Font m_textFont{};
+
     };
 
 } 

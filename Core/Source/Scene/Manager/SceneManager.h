@@ -30,7 +30,8 @@ namespace Scene {
         void pushLayer(Args&&... args)
         {
             static_assert(std::is_base_of_v<Layer, TLayer>, "TLayer must derive from Scene::Layer");
-            m_layerStack.push_back(std::make_unique<TLayer>(std::forward<Args>(args)...));
+            auto layer = std::make_unique<TLayer>(std::forward<Args>(args)...);
+            m_layerStack.push_back(std::move(layer));
         }
 
         void clearLayers() noexcept;

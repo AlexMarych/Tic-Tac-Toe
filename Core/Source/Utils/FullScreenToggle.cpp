@@ -1,9 +1,10 @@
 #include "FullScreenToggle.h"
+#include "Game/Game.h"
 
 namespace DebugUtils
 {
-    int FullScreenToggle::s_windowedWidth = 800;  
-    int FullScreenToggle::s_windowedHeight = 600; 
+    int FullScreenToggle::s_windowedWidth = Core::Game::GetConfig().screenWidth;
+    int FullScreenToggle::s_windowedHeight = Core::Game::GetConfig().screenHeight;
 
     void FullScreenToggle::ToggleFullScreen()
     {

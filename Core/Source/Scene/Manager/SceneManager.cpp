@@ -9,7 +9,8 @@ namespace Scene {
     void SceneManager::update(float deltaTime)
     {
         for (const auto& layer : m_layerStack) {
-            if (layer) layer->update(deltaTime);
+            if (!layer) continue;
+            layer->update(deltaTime);
         }
     }
 

@@ -20,6 +20,7 @@ target_sources(Core PRIVATE
 	"Source/UI/UIComponent.cpp"
 	"Source/UI/UILabel.cpp"
 	"Source/Utils/FullScreenToggle.cpp"
+ "Source/Patterns/Factory/IProduct.cpp"
 )
 target_include_directories(Core PUBLIC "${CMAKE_CURRENT_LIST_DIR}/Source")
 target_link_libraries(Core PUBLIC raylib raygui fmt nlohmann_json)

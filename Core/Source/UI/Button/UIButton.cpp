@@ -20,14 +20,20 @@ namespace UI {
 
         Vector2 mousePoint = GetMousePosition();
 
+
+
         if (UIComponent::isInBounds(mousePoint)) {
-            if (IsMouseButtonDown(MOUSE_LEFT_BUTTON)) {
+
+            bool mouseDown = IsMouseButtonDown(MOUSE_LEFT_BUTTON);
+            bool mouseReleased = IsMouseButtonReleased(MOUSE_LEFT_BUTTON);
+
+            if (mouseDown) {
                 m_state = ButtonState::HOLDED;
             } else {
                 m_state = ButtonState::FOCUSED;
             }
 
-            if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON)) {
+            if (mouseReleased) {
                 handleEvent();
                 m_state = ButtonState::PRESSED;
             }

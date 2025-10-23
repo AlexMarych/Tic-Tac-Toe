@@ -6,12 +6,17 @@
 
 namespace Core {
 
+	constexpr int DEFAULT_SCREEN_WIDTH = 800;
+	constexpr int DEFAULT_SCREEN_HEIGHT = 600;
+	constexpr int DEFAULT_FPS = 60;
+	constexpr char* DEFAULT_WINDOW_TITLE = "Game";
+
 	struct GameConfig 
 	{
-		int screenWidth = 800;
-		int screenHeight = 600;
-		int fps = 60;
-		std::string windowTitle = "Game";
+		int screenWidth = DEFAULT_SCREEN_WIDTH;
+		int screenHeight = DEFAULT_SCREEN_HEIGHT;
+		int fps = DEFAULT_FPS;
+		std::string windowTitle = DEFAULT_WINDOW_TITLE;
 	};
 
 	class Game {

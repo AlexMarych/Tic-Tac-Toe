@@ -4,6 +4,9 @@
 
 namespace Core {
 
+    constexpr Vector2 DEFAULT_POSITION = {0, 0};
+    constexpr Rectangle DEFAULT_DESTINATION_REC = {0, 0, 0, 0};
+
     Renderable::Renderable(const Texture2D& texture,
         const Rectangle& sourceRect,
         const Rectangle& destRect,
@@ -17,16 +20,18 @@ namespace Core {
 
     Renderable::Renderable(const Texture2D& texture, const Rectangle& destRect) noexcept
         : m_texture(texture)
-        , m_origin{ 0.0f, 0.0f }
-        , m_sourceRect{ 0.0f, 0.0f, static_cast<float>(texture.width), static_cast<float>(texture.height) }
+        , m_origin(DEFAULT_POSITION)
         , m_destRect(destRect)
     {
+        auto width = static_cast<float>(texture.width);
+		auto height = static_cast<float>(texture.height);
+        m_sourceRect = { DEFAULT_POSITION.x, DEFAULT_POSITION.y, width, height };
     }
 
     Renderable::Renderable(const Rectangle& destRect) noexcept
-        : m_texture{}
-        , m_origin{ 0.0f, 0.0f }
-        , m_sourceRect{ 0.0f, 0.0f, 0.0f, 0.0f }
+        : m_texture()
+        , m_origin(DEFAULT_POSITION)
+        , m_sourceRect(DEFAULT_DESTINATION_REC)
         , m_destRect(destRect)
     {
     }

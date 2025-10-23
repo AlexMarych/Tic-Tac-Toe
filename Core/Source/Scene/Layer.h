@@ -24,7 +24,9 @@ namespace Scene
 
         template <typename T>
         void addObject(T* obj) {
-            static_assert(std::is_base_of<Core::IUpdatable, T>::value || std::is_base_of<Core::IRenderable, T>::value,
+
+            static_assert(std::is_base_of<Core::IUpdatable, T>::value ||
+                std::is_base_of<Core::IRenderable, T>::value,
                 "Type T must derive from IUpdatable or IRenderable");
 
             if (!obj) return;
@@ -43,8 +45,11 @@ namespace Scene
         template <typename T>
         void removeObject(const T* obj) {
             if (!obj) return;
-            renderObjects.erase(std::remove(renderObjects.begin(), renderObjects.end(), obj), renderObjects.end());
-            updateObjects.erase(std::remove(updateObjects.begin(), updateObjects.end(), obj), updateObjects.end());
+            auto it = std::remove(renderObjects.begin(), renderObjects.end(), obj);
+            renderObjects.erase(it, renderObjects.end());
+            
+            auto it = std::remove(updateObjects.begin(), updateObjects.end(), obj);
+            updateObjects.erase(it, updateObjects.end());
         }
 
         void clear() noexcept;

@@ -16,7 +16,7 @@ namespace Animation {
 		explicit Animatable(const Texture2D& animSheet, const Rectangle& destRect, int maxFrame = 1);
 
 		void addAnimation(const std::string& name, std::unique_ptr<AnimationState> animation);
-		void addAnimation(const std::string& name, const Texture2D& sheet, const Rectangle& destRect, int maxFrame, float fps = 12.0f);
+		void addAnimation(const std::string& name, const Texture2D& sheet, const Rectangle& destRect, int maxFrame, float fps);
 
 
 		void play(const std::string& animationName);

@@ -6,10 +6,12 @@
 #include <typeindex>
 #include <functional>
 #include <memory>
-using json = nlohmann::json;
+
 
 namespace Factory
 {
+    using json = nlohmann::json;
+
     class ObjectFactory {
       
     public:
@@ -29,14 +31,18 @@ namespace Factory
 
         template<typename T>
         std::unique_ptr<T> create(const json& data) {
-            auto it = m_registry.find(typeid(T));
+            const auto& it = m_registry.find(typeid(T));
             if (it == m_registry.end())
                 throw std::runtime_error("Type not registered");
 
             auto obj = it->second();
             obj->LoadFromJson(data);
 
-            return std::unique_ptr<T>(static_cast<T*>(obj.release()));
+            auto ptr = dynamic_cast<T*>(obj.get());
+
+            if (!ptr) throw std::runtime_error("Failed to cast IProduct to requested type");
+
+            return std::unique_ptr<T>(obj.release());
         }
 	private:
         using Creator = std::function<std::unique_ptr<IProduct>()>;

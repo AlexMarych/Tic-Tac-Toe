@@ -13,7 +13,7 @@ namespace UI {
     UIComponent::~UIComponent() noexcept = default;
 
 
-    bool UIComponent::isInBounds(Vector2& point)
+    bool UIComponent::isInBounds(const Vector2& point) const
     {
         return CheckCollisionPointRec(point, m_bounds);
     }

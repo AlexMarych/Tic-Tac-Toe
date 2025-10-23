@@ -37,9 +37,6 @@ namespace Core {
 
             if (m_sceneManager) {
                 m_sceneManager->update(GetFrameTime());
-            }
-
-            if (m_sceneManager) {
                 m_sceneManager->render();
             }
 

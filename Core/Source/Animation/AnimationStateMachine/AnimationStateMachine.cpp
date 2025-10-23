@@ -3,15 +3,18 @@
 
 namespace Animation {
 
+    constexpr int DEFAULT_FPS = (1.0f / 12.0f);
+
     AnimationState::AnimationState(const Texture2D& texture, const Rectangle& destRect, float width, float height, int maxFrame, float fps)
         : Renderable(texture, destRect),
         m_frame(0),
         m_runningTime(0.0f),
         m_width(width),
         m_height(height),
-        m_maxFrameCount(maxFrame),
-        m_updateTime((fps > 0.0f) ? (1.0f / fps) : 1.0f / 12.0f)
+        m_maxFrameCount(maxFrame)
     {
+        auto effectiveFPS = (fps > 0.0f) ? fps : DEFAULT_FPS;
+        m_updateTime = 1.0f / effectiveFPS;
     }
 
     void AnimationState::update(float deltaTime) noexcept {
@@ -30,9 +33,11 @@ namespace Animation {
     }
 
     void AnimationState::render() {
+        auto currentTexturePos = m_frame * m_width;
+
         this->setSourceRect({
-            static_cast<float>(m_frame) * m_width,
-            0.0f,
+            currentTexturePos,
+            m_origin,
             m_width,
             m_height
         });
