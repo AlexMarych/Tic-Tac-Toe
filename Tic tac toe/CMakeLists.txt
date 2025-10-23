@@ -8,8 +8,8 @@ target_link_libraries(Tic-Tac-Toe PRIVATE Core raylib raygui fmt nlohmann_json)
 target_compile_features(Tic-Tac-Toe PRIVATE cxx_std_17)
 
 target_compile_definitions(Tic-Tac-Toe PUBLIC
-    $<$<CONFIG:Debug>:ASSETS_PATH="${CMAKE_SOURCE_DIR}/assets/">
-    $<$<CONFIG:Release>:ASSETS_PATH="./assets/">
+    $<$<CONFIG:Debug>:ASSETS_PATH="${CMAKE_SOURCE_DIR}/Tic tac toe/Assets/">
+    $<$<CONFIG:Release>:ASSETS_PATH="./Assets/">
 )
 
 if(WIN32 AND MSVC)

@@ -7,6 +7,7 @@ namespace Core {
         , m_sceneManager(std::make_unique<Scene::SceneManager>())
         , m_isRunning(false)
     {
+		s_config = cfg;
         initWindow();
     }
 
@@ -36,6 +37,10 @@ namespace Core {
 
             if (m_sceneManager) {
                 m_sceneManager->update(GetFrameTime());
+            }
+
+            if (m_sceneManager) {
+                m_sceneManager->render();
             }
 
             EndDrawing();

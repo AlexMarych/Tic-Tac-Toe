@@ -27,6 +27,10 @@ namespace Core {
 		void stop() noexcept;
 		void Run();
 
+		inline Scene::SceneManager* getSceneManager() const noexcept { return m_sceneManager.get(); }
+		static inline const GameConfig& GetConfig() noexcept { return s_config; }
+		
+
 	private:
 		bool m_isRunning{};
 		GameConfig m_config{};
@@ -34,6 +38,8 @@ namespace Core {
 
 		void initWindow();
 		void shutdown() noexcept;
+
+		static inline GameConfig s_config{};
 	};
 
 }
