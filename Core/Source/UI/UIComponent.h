@@ -11,7 +11,7 @@ namespace UI {
 	{
 	
 	public:
-		explicit UIComponent(const Texture2D& texture, const Rectangle& destRect) noexcept;
+		explicit UIComponent(const Texture2D& texture, const std::string& text, const Rectangle& destRect) noexcept;
 		virtual ~UIComponent() noexcept override;
 
 		inline void setVisible(bool isVisible) noexcept { m_visible = isVisible; }

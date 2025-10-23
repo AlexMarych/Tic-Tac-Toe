@@ -1,15 +1,12 @@
 #include "UIButton.h"
-#include "raylib.h"
-#include "raygui.h"
-#include "UI/UIComponent.h"
+
 
 namespace UI {
 
-    bool UIComponent::s_guiSliderDragging = false;
-
     UIButton::UIButton(const Texture2D& texture, const std::string& text, const Rectangle& destRect)
-        : UIComponentAnimated(texture, destRect)
+        : UIComponent(texture, text, destRect)
         , UILabel(text, destRect)
+		, Animatable(texture, destRect)
         , m_state(ButtonState::NORMAL)
     {
     }
@@ -34,6 +31,8 @@ namespace UI {
                 m_state = ButtonState::PRESSED;
             }
         }
+
+		Animatable::update(deltaTime);
     }
 
     void UIButton::render() {
@@ -58,6 +57,7 @@ namespace UI {
             break;
         }
 
+        
         UILabel::render();
     }
 

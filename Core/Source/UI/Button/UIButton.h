@@ -1,8 +1,10 @@
 #pragma once
 
-#include "../UIComponentAnimated.h"
-#include "../UILabel.h"
-#include "raygui.h"
+#include "UI/UILabel.h"
+#include "UI/UIComponent.h"
+#include "Animation/Animatable.h"
+#include <raygui.h>
+#include <raylib.h>
 #include <functional>
 #include <vector>
 #include "Event/InputEvent.h"
@@ -16,9 +18,9 @@ namespace UI {
 		PRESSED,
 		HOLDED,
 		DISABLED
-	};
+ 	};
 
-	class UIButton : public UIComponentAnimated, public UILabel
+	class UIButton : public UIComponent, public UILabel, public Animation::Animatable
 	{
 	private:
 		std::vector <EventSystem::UIEvent> m_onClick;

@@ -13,13 +13,11 @@ target_sources(Core PRIVATE
 	"Source/CoreObject/Renderable.cpp" 
 	"Source/Game/Game.cpp" 
 	"Source/Patterns/Command/CommandInvoker.cpp" 
-	"Source/Patterns/State/StateMachine.cpp" 
 	"Source/Scene/Manager/SceneManager.cpp" 
 	"Source/Scene/Layer.cpp" 
 	"Source/Serialization/FileManager.cpp"
 	"Source/UI/Button/UIButton.cpp"
 	"Source/UI/UIComponent.cpp"
-	"Source/UI/UIComponentAnimated.cpp"
 	"Source/UI/UILabel.cpp"
 	"Source/Utils/FullScreenToggle.cpp"
 )

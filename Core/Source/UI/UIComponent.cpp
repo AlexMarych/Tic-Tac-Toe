@@ -4,8 +4,8 @@ namespace UI {
 
     bool UIComponent::s_guiSliderDragging = false;
 
-    UIComponent::UIComponent(const Texture2D& texture, const Rectangle& destRect) noexcept
-        : Core::GameObject(texture, std::string(), destRect)
+    UIComponent::UIComponent(const Texture2D& texture, const std::string& text, const Rectangle& destRect) noexcept
+        : GameObject(texture, text, destRect)
         , m_visible(true)
     {
     }

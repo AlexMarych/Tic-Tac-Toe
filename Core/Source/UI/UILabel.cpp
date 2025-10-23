@@ -6,7 +6,7 @@ namespace UI {
         : Core::Renderable(destRect)
         , m_text(text)
         , m_fontSize(20)
-        , m_spacing(0)
+        , m_spacing(2)
         , m_color(BLACK)
         , m_textFont(font)
     {
