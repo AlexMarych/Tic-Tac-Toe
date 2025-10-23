@@ -5,7 +5,7 @@
 
 namespace Core {
 
-    class Renderable : public IRenderable {
+    class Renderable : public virtual IRenderable {
 
     public:
         Renderable() noexcept = default;

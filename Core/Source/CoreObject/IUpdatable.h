@@ -1,7 +1,5 @@
 #pragma once
 
-#include "Renderable.h"
-
 namespace Core {
 
 	class IUpdatable {

@@ -6,10 +6,9 @@
 
 namespace Core {
 
-	class GameObject : public IUpdatable, public Renderable {
+	class GameObject : public virtual IUpdatable, public Renderable {
 
 	public:
-        GameObject() noexcept = default;
         explicit GameObject(const Texture2D& texture, const std::string& name, const Rectangle& destRect);
 
         ~GameObject() noexcept override = default;
