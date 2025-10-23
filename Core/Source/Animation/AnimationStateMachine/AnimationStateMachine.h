@@ -7,7 +7,7 @@
 
 namespace Animation {
 
-    class AnimationState : public IState, public Core::Renderable {
+    class AnimationState : public IState, public virtual Core::Renderable {
     public:
         AnimationState() noexcept = default;
         virtual ~AnimationState() = default;
@@ -16,9 +16,10 @@ namespace Animation {
 
         void update(float deltaTime) noexcept override;
 
+        void render() override;
+
     private:
         void updateFrame(float deltaTime);
-        void render() const;
 
     private:
         int m_frame{ 0 };
@@ -27,14 +28,6 @@ namespace Animation {
         float m_height{ 0.0f };
         int m_maxFrameCount{ 0 };
         float m_updateTime{ 1.0f / 12.0f };
-    };
-
-
-
-    class AnimationStateMachine : public StateMachine {
-    public:
-        AnimationStateMachine() = default;
-        virtual ~AnimationStateMachine() override = default;
     };
 
 }

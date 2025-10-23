@@ -16,8 +16,8 @@ namespace Animation {
 
     void AnimationState::update(float deltaTime) noexcept {
         updateFrame(deltaTime);
-        render();
-    }
+		render();
+	}
 
     void AnimationState::updateFrame(float deltaTime) {
         m_runningTime += deltaTime;
@@ -29,7 +29,7 @@ namespace Animation {
         }
     }
 
-    void AnimationState::render() const {
+    void AnimationState::render() {
         Rectangle source{
             static_cast<float>(m_frame) * m_width,
             0.0f,
@@ -38,5 +38,6 @@ namespace Animation {
         };
         DrawTexturePro(getTexture(), source, getPosition(), getOrigin(), getRotation(), getTint());
     }
+
 
 }
