@@ -10,7 +10,7 @@
 
 namespace Scene 
 {
-	class Layer : public Core::IUpdatable, public Core::IRenderable, public EventSystem::IEventListener, public Factory::IProduct
+	class Layer : public Core::IUpdatable, public Core::IRenderable, public EventSystem::IEventListener
 	{
 		
 	public:
