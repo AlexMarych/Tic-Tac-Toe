@@ -24,14 +24,14 @@ public:
     StateMachine(const StateMachine&) = delete;
     StateMachine& operator=(const StateMachine&) = delete;
 
-    void setState(std::unique_ptr<StateType> newState) noexcept {
+    void setState(StateType* newState) noexcept {
 		if (m_currentState) m_currentState->exit();
-        m_currentState = std::move(newState);
+        m_currentState = newState;
         if (m_currentState) m_currentState->enter();
     }
 
     StateType* getCurrentState() const noexcept {
-        return m_currentState.get();
+        return m_currentState;
     }
 
     void update(float deltaTime) noexcept {
@@ -41,5 +41,5 @@ public:
     }
 
 private:
-    std::unique_ptr<StateType> m_currentState;
+    StateType* m_currentState;
 };

@@ -4,7 +4,7 @@
 #include <memory>
 #include <string>
 #include <stdexcept>
-#include <unordered_map>
+#include <map>
 #include "Utils/DebugUtils.h"
 #include "CoreObject/IUpdatable.h"
 
@@ -27,7 +27,7 @@ namespace Animation {
 
 	private:
 		std::unique_ptr<StateMachine<AnimationState>> m_animator{};
-		std::unordered_map<std::string, std::unique_ptr<AnimationState>> m_animations{};
+		std::map<std::string, std::unique_ptr<AnimationState>> m_animations{};
 		std::string m_currentAnimation{};
 	};
 

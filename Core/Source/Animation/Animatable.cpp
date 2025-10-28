@@ -26,7 +26,7 @@ namespace Animation {
 
 	void Animatable::addAnimation(const std::string& name, std::unique_ptr<AnimationState> animation)
 	{
-		m_animations.emplace(name, 	std::move(animation));
+		m_animations.emplace(name, std::move(animation));
 	}
 
 	void Animatable::addAnimation(const std::string& name, const Texture2D& sheet, const Rectangle& destRect, int maxFrame, float fps)
@@ -50,15 +50,14 @@ namespace Animation {
 		const auto& it = m_animations.find(animationName);
 		if (it != m_animations.end() && it->second) {
 
-			m_animator->setState(	std::move(it->second));
-
+			m_animator->setState(	it->second.get());
 			m_currentAnimation = it->first;
 		}
 		else {
 
 			auto it = m_animations.begin();
 
-			m_animator->setState(std::move(it->second));
+			m_animator->setState(it->second.get());
 			m_currentAnimation = it->first;
 			DebugUtils::println(std::string("Error: animation '") + animationName + "' does not exist");
 		}

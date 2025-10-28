@@ -7,6 +7,7 @@
 
 namespace Animation {
 
+
     class AnimationState : public IState, public virtual Core::Renderable {
     public:
         AnimationState() noexcept = default;
@@ -28,7 +29,7 @@ namespace Animation {
         float m_origin{ 0.0f };
         float m_height{ 0.0f };
         int m_maxFrameCount{ 0 };
-        float m_updateTime{ 1.0f / 12.0f };
+        float m_updateTime{ 0 };
     };
 
 }
