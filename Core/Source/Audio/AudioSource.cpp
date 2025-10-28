@@ -9,9 +9,9 @@ namespace Audio
     }
 
     AudioSource::AudioSource(AudioSource&& other) noexcept
-        : m_sound(other.m_sound), m_loaded(other.m_loaded)
+        : m_sound(std::move(other.m_sound)),
+        m_loaded(other.m_loaded)
     {
-        other.m_sound = {};
         other.m_loaded = false;
     }
 

@@ -13,7 +13,7 @@ namespace Core {
 
         ~GameObject() noexcept override = default;
 
-        void update(float deltaTime) override;
+        virtual void update(float deltaTime) override;
 
         inline void setActive(bool isActive) noexcept { m_active = isActive; }
         inline bool isActive() const noexcept { return m_active; }
