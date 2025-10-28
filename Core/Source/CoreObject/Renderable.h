@@ -5,6 +5,22 @@
 
 namespace Core {
 
+	constexpr float DEFUALT_SCALE = 1.0f;
+
+    struct RectangleScale {
+        float scaleX{DEFUALT_SCALE};
+        float scaleY{DEFUALT_SCALE};
+
+        Rectangle operator*(const Rectangle& rect) noexcept {
+            return {
+                rect.x * scaleX,
+                rect.y * scaleY,
+                rect.width * scaleX,
+                rect.height * scaleY
+			};
+		}
+	};
+
     class Renderable : public virtual IRenderable {
 
     public:
@@ -12,7 +28,7 @@ namespace Core {
         Renderable(const Texture2D& texture,
             const Rectangle& sourceRect,
             const Rectangle& destRect,
-            const Vector2& origin = { 0.0f, 0.0f }) noexcept;
+            const Vector2& origin) noexcept;
 
         explicit Renderable(const Texture2D& texture, const Rectangle& destRect) noexcept;
         explicit Renderable(const Rectangle& destRect) noexcept;
@@ -35,7 +51,7 @@ namespace Core {
 
 		virtual void scale() noexcept;   
 
-        void render() override;
+        virtual void render() override;
     private:
         Texture2D m_texture{};
         Vector2 m_origin{ 0.0f, 0.0f };
@@ -45,7 +61,7 @@ namespace Core {
         Color m_tint{ WHITE };
     
     protected:
-        float m_scaleX{};
-        float m_scaleY{};
+        RectangleScale m_scaleRect{};
+
     };
 }

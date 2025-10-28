@@ -17,8 +17,10 @@ namespace UI {
 		inline void setVisible(bool isVisible) noexcept { m_visible = isVisible; }
 		inline bool isVisible() const noexcept { return m_visible; }
 
+		inline void updateBounds() noexcept { m_bounds = m_scaleRect * m_bounds; }
+		inline const Rectangle& getBounds() const noexcept { return m_bounds; }
 
-		virtual bool isInBounds(const Vector2& point) const;
+		virtual bool isInBounds(const Vector2& point);
 
 		virtual void update(float deltaTime) override;
 		virtual void render() override;

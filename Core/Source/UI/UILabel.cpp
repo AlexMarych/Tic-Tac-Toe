@@ -21,13 +21,13 @@ namespace UI {
     {
 		Renderable::scale();
 
-        const float scaledFontSize = m_fontSize * std::min(m_scaleX, m_scaleY);
-        const float scaledSpacing = m_spacing * std::min(m_scaleX, m_scaleY);
+        const float scaledFontSize = m_fontSize * std::min(m_scaleRect.scaleX , m_scaleRect.scaleY);
+        const float scaledSpacing = m_spacing * std::min(m_scaleRect.scaleX, m_scaleRect.scaleY);
 
         const Rectangle pos = getPosition();
         DrawTextPro(m_textFont,
             m_text.c_str(),
-            { pos.x * m_scaleX, pos.y * m_scaleY },
+            { pos.x * m_scaleRect.scaleX, pos.y * m_scaleRect.scaleY },
             getOrigin(),
             getRotation(),
             scaledFontSize,

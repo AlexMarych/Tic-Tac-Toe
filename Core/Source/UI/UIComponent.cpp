@@ -1,4 +1,5 @@
 #include "UIComponent.h"
+#include <iostream>
 
 namespace UI {
 
@@ -7,15 +8,17 @@ namespace UI {
     UIComponent::UIComponent(const Texture2D& texture, const std::string& text, const Rectangle& destRect) noexcept
         : GameObject(texture, text, destRect)
         , m_visible(true)
+		, m_bounds(destRect)
     {
     }
 
     UIComponent::~UIComponent() noexcept = default;
 
 
-    bool UIComponent::isInBounds(const Vector2& point) const
+    bool UIComponent::isInBounds(const Vector2& point)
     {
-        return CheckCollisionPointRec(point, m_bounds);
+        scale();
+        return CheckCollisionPointRec(point, m_scaleRect * m_bounds);
     }
 
     void UIComponent::update(float deltaTime)

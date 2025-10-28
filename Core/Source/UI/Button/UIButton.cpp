@@ -1,6 +1,5 @@
 #include "UIButton.h"
 
-
 namespace UI {
 
     UIButton::UIButton(const Texture2D& texture, const std::string& text, const Rectangle& destRect, const RectangleOffset& offset) noexcept
@@ -20,9 +19,9 @@ namespace UI {
 
         Vector2 mousePoint = GetMousePosition();
 
-
-
         if (UIComponent::isInBounds(mousePoint)) {
+
+
 
             bool mouseDown = IsMouseButtonDown(MOUSE_LEFT_BUTTON);
             bool mouseReleased = IsMouseButtonReleased(MOUSE_LEFT_BUTTON);

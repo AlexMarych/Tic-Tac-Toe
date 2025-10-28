@@ -37,8 +37,8 @@ namespace Core {
     }
 
     void Renderable::scale() noexcept {
-        m_scaleX = (float)GetScreenWidth() / (float)Game::GetConfig().screenWidth;
-        m_scaleY = (float)GetScreenHeight() / (float)Game::GetConfig().screenHeight;
+        m_scaleRect.scaleX = (float)GetScreenWidth() / (float)Game::GetConfig().screenWidth;
+        m_scaleRect.scaleY = (float)GetScreenHeight() / (float)Game::GetConfig().screenHeight;
     }
 
     void Renderable::render()
@@ -48,12 +48,7 @@ namespace Core {
         DrawTexturePro(
             m_texture,
             m_sourceRect,
-            {
-                    m_destRect.x * m_scaleX,
-                    m_destRect.y * m_scaleY,
-                    m_destRect.width * m_scaleX,
-                    m_destRect.height * m_scaleY
-            },
+			m_scaleRect * m_destRect,
             m_origin, 
             m_rotation, 
             m_tint);
